@@ -1,8 +1,7 @@
 package fr.oc.nico.clambering;
 
-import fr.oc.nico.clambering.entity.Test;
-import fr.oc.nico.clambering.repository.TestRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -10,24 +9,16 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class ClamberingApplication implements CommandLineRunner {
 
-	@Autowired
-	TestRepository testRepository;
+    private static final Logger LOGGER = LoggerFactory.getLogger(ClamberingApplication.class);
 
-	public static void main(String[] args) {
-		SpringApplication.run(ClamberingApplication.class, args);
-		System.out.println("L'application a démarré");
+    public static void main(String[] args) {
+        SpringApplication.run(ClamberingApplication.class, args);
+        LOGGER.info("L'application a démarré");
 
-	}
+    }
 
+    @Override
+    public void run(String... args) throws Exception {
+    }
 
-	@Override
-	public void run(String... args) throws Exception {
-
-		Test test = new Test();
-		test.setName("test");
-
-		testRepository.save(test);
-		System.out.println(">>> Creation instance 'Test'");
-
-	}
 }

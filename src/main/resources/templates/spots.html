@@ -15,11 +15,7 @@
                 <img class="card-img-top" src="img/calanques-envau-breche-castelvieil.jpg" th:alt="${spot.image}">
                 <div class="card-body">
                     <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.nom}">...</h4></a>
-                    <!-- <p class="badge badge-pill badge-info">Secteur : <span th:utext="${#lists.size(spot.secteurs)}">...</span></p> -->
                     <p class="card-text">Secteur : <span th:utext="${spot.secteurs.size()}"></span></p>
-
-                    <p th:each="secteur : ${spot.secteurs}" class="card-text">test : <span th:utext="*{secteur.voies.size()}"></span></p>
-                    <p th:each="secteur : ${spot.secteurs}" class="card-text">Voie : <span th:utext="*{secteur.voies.size()}"></span></p>
                 </div>
             </div>
         </div>

@@ -1,6 +1,5 @@
 package fr.oc.nico.clambering.controller;
 
-import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.service.SpotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,9 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 @Controller

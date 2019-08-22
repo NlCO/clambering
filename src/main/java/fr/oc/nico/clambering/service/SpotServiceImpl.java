@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
-import java.util.Optional;
 
 @Service("SpotService")
 public class SpotServiceImpl implements SpotService {
@@ -24,6 +23,6 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public Spot spotInfo(Integer spotId) {
         return spotRepository.findById(spotId)
-                .orElseThrow(() -> new EntityNotFoundException("Le spot " + spotId + "n'exite pas"));
+                .orElseThrow(() -> new EntityNotFoundException("Le spot " + spotId + " n'exite pas"));
     }
 }

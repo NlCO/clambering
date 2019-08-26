@@ -1,5 +1,8 @@
 package fr.oc.nico.clambering.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Comparator;
@@ -7,6 +10,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Entity
+@Getter
+@Setter
 public class Voie implements Serializable {
 
     @Id
@@ -31,68 +36,27 @@ public class Voie implements Serializable {
     @Transient
     private Float hauteur;
 
-    public List<Longueur> getLongueurs() {
-        return longueurs;
-    }
-
-    public void setLongueurs(List<Longueur> longueurs) {
-        this.longueurs = longueurs;
-    }
-
-    public Integer getVoieId() {
-        return voieId;
-    }
-
-    public void setVoieId(Integer voieId) {
-        this.voieId = voieId;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Secteur getSecteur() {
-        return secteur;
-    }
-
-    public void setSecteur(Secteur secteur) {
-        this.secteur = secteur;
-    }
-
-    @Transient
     public String getCotationMin() {
-        setCotationMin();
-        return cotationMin;
+        return longueurs.stream().min(Comparator.comparing(Longueur::getCotation)).orElseThrow(NoSuchElementException::new).getCotation();
     }
 
-    @Transient
     public void setCotationMin() {
-        this.cotationMin = longueurs.stream().min(Comparator.comparing(Longueur::getCotation)).orElseThrow(NoSuchElementException::new).getCotation();
+        this.cotationMin = getCotationMin();
     }
 
-    @Transient
     public String getCotationMax() {
-        setCotationMax();
-        return cotationMax;
+        return longueurs.stream().max(Comparator.comparing(Longueur::getCotation)).orElseThrow(NoSuchElementException::new).getCotation();
     }
 
-    @Transient
     public void setCotationMax() {
-        this.cotationMax = longueurs.stream().max(Comparator.comparing(Longueur::getCotation)).orElseThrow(NoSuchElementException::new).getCotation();
+        this.cotationMax = getCotationMax();
     }
 
-    @Transient
     public Float getHauteur() {
-        setHauteur();
-        return hauteur;
+        return longueurs.stream().map(Longueur::getHauteur).reduce(0.0f, Float::sum);
     }
 
-    @Transient
     public void setHauteur() {
-        this.hauteur = longueurs.stream().map(Longueur::getHauteur).reduce(0.0f, (a, b) -> a + b);
+        this.hauteur = getHauteur();
     }
 }

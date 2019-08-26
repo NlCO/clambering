@@ -1,5 +1,8 @@
 package fr.oc.nico.clambering.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Comparator;
@@ -7,6 +10,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Entity
+@Getter
+@Setter
 public class Spot implements Serializable {
 
     @Id
@@ -45,138 +50,40 @@ public class Spot implements Serializable {
     private String cotationMax;
 
     @Transient
-    public String getCotationMax() {
-        setCotationMax();
-        return cotationMax;
-    }
-    @Transient
     private Float hauteurMin;
 
     @Transient
     private Float hauteurMax;
 
-    @Transient
+    public String getCotationMax() {
+        return secteurs.stream().max(Comparator.comparing(Secteur::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
+    }
+
     public void setCotationMax() {
-        this.cotationMax = secteurs.stream().max(Comparator.comparing(Secteur::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();;
+        this.cotationMax = getCotationMax();
     }
 
-    @Transient
     public String getCotationMin() {
-        setCotationMin();
-        return cotationMin;
+        return secteurs.stream().min(Comparator.comparing(Secteur::getCotationMin)).orElseThrow(NoSuchElementException::new).getCotationMin();
     }
 
-    @Transient
     public void setCotationMin() {
-        this.cotationMin = secteurs.stream().min(Comparator.comparing(Secteur::getCotationMin)).orElseThrow(NoSuchElementException::new).getCotationMin();
+        this.cotationMin = getCotationMin();
     }
 
-    @Transient
     public Float getHauteurMin() {
-        setHauteurMin();
-        return hauteurMin;
+        return secteurs.stream().min(Comparator.comparing(Secteur::getHauteurMin)).orElseThrow(NoSuchElementException::new).getHauteurMin();
     }
 
-    @Transient
     public void setHauteurMin() {
-        this.hauteurMin = secteurs.stream().min(Comparator.comparing(Secteur::getHauteurMin)).orElseThrow(NoSuchElementException::new).getHauteurMin();
+        this.hauteurMin = getHauteurMin();
     }
 
-    @Transient
     public Float getHauteurMax() {
-        setHauteurMax();
-        return hauteurMax;
+        return secteurs.stream().max(Comparator.comparing(Secteur::getHauteurMax)).orElseThrow(NoSuchElementException::new).getHauteurMax();
     }
 
-    @Transient
     public void setHauteurMax() {
-        this.hauteurMax = secteurs.stream().max(Comparator.comparing(Secteur::getHauteurMax)).orElseThrow(NoSuchElementException::new).getHauteurMax();
-    }
-    public Integer getSpotId() {
-        return spotId;
-    }
-
-    public void setSpotId(Integer spotId) {
-        this.spotId = spotId;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getAcces() {
-        return acces;
-    }
-
-    public void setAcces(String acces) {
-        this.acces = acces;
-    }
-
-    public String getOrientation() {
-        return orientation;
-    }
-
-    public void setOrientation(String orientation) {
-        this.orientation = orientation;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public Float getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(Float longitude) {
-        this.longitude = longitude;
-    }
-
-    public Float getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(Float latitude) {
-        this.latitude = latitude;
-    }
-
-    public boolean isTagAmiEscalade() {
-        return tagAmiEscalade;
-    }
-
-    public void setTagAmiEscalade(boolean tagAmiEscalade) {
-        this.tagAmiEscalade = tagAmiEscalade;
-    }
-
-    public List<Secteur> getSecteurs() {
-        return secteurs;
-    }
-
-    public void setSecteurs(List<Secteur> secteurs) {
-        this.secteurs = secteurs;
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public void setRegion(Region region) {
-        this.region = region;
+        this.hauteurMax = getHauteurMax();
     }
 }

@@ -11,7 +11,6 @@ public class ClamberingApplicationTests {
 
     @Test
     public void contextLoads() {
-
     }
 
 }

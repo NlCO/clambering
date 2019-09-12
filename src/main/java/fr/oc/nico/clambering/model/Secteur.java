@@ -1,5 +1,8 @@
 package fr.oc.nico.clambering.model;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Comparator;
@@ -7,6 +10,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Entity
+@Getter
+@Setter
 public class Secteur implements Serializable {
 
     @Id
@@ -37,86 +42,35 @@ public class Secteur implements Serializable {
     @Transient
     private Float hauteurMax;
 
-    @Transient
     public String getCotationMax() {
-        setCotationMax();
-        return cotationMax;
+        return voies.stream().max(Comparator.comparing(Voie::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
     }
 
-    @Transient
     public void setCotationMax() {
-        this.cotationMax = voies.stream().max(Comparator.comparing(Voie::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();;
+        this.cotationMax = getCotationMax();
     }
 
-    @Transient
     public String getCotationMin() {
-        setCotationMin();
-        return cotationMin;
+        return voies.stream().min(Comparator.comparing(Voie::getCotationMin)).orElseThrow(NoSuchElementException::new).getCotationMin();
     }
 
-    @Transient
     public void setCotationMin() {
-        this.cotationMin = voies.stream().min(Comparator.comparing(Voie::getCotationMin)).orElseThrow(NoSuchElementException::new).getCotationMin();
+        this.cotationMin = getCotationMin();
     }
 
-    @Transient
     public Float getHauteurMin() {
-        setHauteurMin();
-        return hauteurMin;
+        return voies.stream().min(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 
-    @Transient
     public void setHauteurMin() {
-        this.hauteurMin = voies.stream().min(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
+        this.hauteurMin = getHauteurMin();
     }
 
-    @Transient
     public Float getHauteurMax() {
-        setHauteurMax();
-        return hauteurMax;
+        return voies.stream().max(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 
-    @Transient
     public void setHauteurMax() {
-        this.hauteurMax = voies.stream().max(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
-    }
-    public Integer getSecteurId() {
-        return secteurId;
-    }
-
-    public void setSecteurId(Integer secteurId) {
-        this.secteurId = secteurId;
-    }
-
-    public String getNom() {
-        return nom;
-    }
-
-    public void setNom(String nom) {
-        this.nom = nom;
-    }
-
-    public Spot getSpot() {
-        return spot;
-    }
-
-    public void setSpot(Spot spot) {
-        this.spot = spot;
-    }
-
-    public List<Voie> getVoies() {
-        return voies;
-    }
-
-    public void setVoies(List<Voie> voies) {
-        this.voies = voies;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        this.hauteurMax = getHauteurMax();
     }
 }

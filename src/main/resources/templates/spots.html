@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
 <head>
     <title>Spots</title>
@@ -7,12 +7,70 @@
 <body>
 
 <main layout:fragment="content">
-    <h1>Liste des spots</h1>
-
+    <div class="container-fluid mt-2 w-75">
+        <div class="card">
+        <div class="card-header d-flex justify-content-between">
+            <h4>Spots : <span th:text="${spots.size()}"></span></h4>
+            <a class="card-link" data-toggle="collapse" href="#collapseFilterForm">Filtre  <i class="fas fa-chevron-down"></i></a>
+        </div>
+        <div class="card-body collapse" id="collapseFilterForm">
+        <form th:action="@{/spots}" th:object="${spotFormCriterias}" method="post">
+            <div class="row justify-content-around">
+                <div class="m-2 d-flex align-items-start flex-column">
+                    <h5>Pays : </h5>
+                    <select name="pays" class="custom-select m-auto" th:field="${spotFormCriterias.pays}">
+                        <option value="">Tous</option>
+                        <option th:each="p : ${formData.getPays()}" th:value="${p.getNom()}" th:utext="${p.getNom()}"></option>
+                    </select>
+                </div>
+                <div class="m-2 d-flex align-items-start flex-column">
+                    <h5>Région :</h5>
+                    <select name="region" class="custom-select m-auto" th:field="${spotFormCriterias.region}">
+                        <option value="">Toutes</option>
+                        <option th:each="r : ${formData.getRegions()}" th:value="${r.getNom()}" th:utext="${r.getNom()}"></option>
+                    </select>
+                </div>
+                <div class="m-2 d-flex align-items-start flex-column">
+                    <h5>Orientation :</h5>
+                    <select name="orientation" class="custom-select m-auto" th:field="${spotFormCriterias.orientation}">
+                        <option value="">Toutes</option>
+                        <option th:each="o : ${formData.getOrientations()}" th:value="${o}" th:utext="${o}"></option>
+                    </select>
+                </div>
+                <div class="m-2 d-flex align-items-start flex-column">
+                    <h5>Secteur :</h5>
+                    <div class="custom-control custom-switch m-auto">
+                        <input type="checkbox" class="custom-control-input" id="switch1" th:field="${spotFormCriterias.multiSecteurs}">
+                        <label class="custom-control-label" for="switch1"> Plus de 1 </label>
+                    </div>
+                </div>
+                <div class="m-2">
+                    <h5>Cotation (spot ayant des Longueurs) :</h5>
+                    <div class="d-flex justify-content-around align-items-baseline">
+                        <p>plus de : </p>
+                        <select name="cotMin" class="custom-select m-3" th:field="${spotFormCriterias.cotationMin}" style="width: 8em">
+                            <option value=""></option>
+                            <option th:each="c : ${formData.getCotations()}" th:value="${c}" th:utext="${c}"></option>
+                        </select>
+                        <p>moins de : </p>
+                        <select name="cotMax" class="custom-select m-3" th:field="${spotFormCriterias.cotationMax}" style="width: 8em">
+                            <option value=""></option>
+                            <option th:each="c : ${formData.getCotations()}" th:value="${c}" th:utext="${c}"></option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-md-2 justify-content-end">
+                <button class="btn-dark btn-lg" type="submit">Filtrer</button>
+            </div>
+      </form>
+        </div>
+        </div>
+    </div>
     <div class="container-fluid w-75">
-        <div class="card-deck">
-            <div th:each ="spot : ${spots}" class="card m-4 rounded" style="min-width:250px">
-                <img class="card-img-top" src="img/calanques-envau-breche-castelvieil.jpg" th:alt="${spot.image}">
+        <div class="card-deck justify-content-around">
+            <div th:each ="spot : ${spots}" class="card m-4 rounded" style="min-width:250px; max-width:250px">
+                <img class="card-img-top" th:src="'/img/' + ${spot.image}" th:alt="${spot.image}" style="height:200px">
                 <div class="card-body">
                     <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.nom}">...</h4></a>
                     <p class="card-text">Secteur : <span th:utext="${spot.secteurs.size()}"></span></p>

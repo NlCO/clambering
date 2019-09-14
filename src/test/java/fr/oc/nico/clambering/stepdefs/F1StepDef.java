@@ -11,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import javax.persistence.EntityNotFoundException;
 
 
-public class SpotStepDef extends CucumberTest {
+public class F1StepDef extends CucumberTest {
 
     @Autowired
     SpotRepository spotRepository;

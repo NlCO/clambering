@@ -1,6 +1,7 @@
 Feature: Spot
 
-  En tant qu'utilisateur je souhaite obtenir des informations sur les spots.
+  Un utilisateur doit pouvoir consulter les informations des sites d’escalades (secteurs, voies, longueurs, etc.).
+
 
   Background:
     Un jeu de test est chargé.

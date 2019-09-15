@@ -6,15 +6,17 @@ import fr.oc.nico.clambering.CucumberTest;
 import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.repository.SpotRepository;
 import org.junit.Assert;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.EntityNotFoundException;
 
 
 public class F1StepDef extends CucumberTest {
 
-    @Autowired
-    SpotRepository spotRepository;
+    private SpotRepository spotRepository;
+
+    F1StepDef(SpotRepository spotRepository){
+        this.spotRepository = spotRepository;
+    }
 
     private Spot spot;
 

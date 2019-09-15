@@ -1,4 +1,4 @@
-Feature: Spot
+Feature: F1 - Affiche les inforations des spots
 
   Un utilisateur doit pouvoir consulter les informations des sites d’escalades (secteurs, voies, longueurs, etc.).
 

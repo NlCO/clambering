@@ -1,0 +1,60 @@
+package fr.oc.nico.clambering.stepdefs;
+
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
+import fr.oc.nico.clambering.model.Spot;
+import fr.oc.nico.clambering.model.SpotFormCriterias;
+import fr.oc.nico.clambering.service.SpotService;
+import org.junit.Assert;
+
+import java.util.List;
+
+public class F2StepDef {
+
+    private SpotService spotService;
+
+    F2StepDef(SpotService spotService){
+        this.spotService = spotService;
+    }
+
+    private SpotFormCriterias spotFormCriterias;
+    private List<Spot> spots;
+
+
+    @Given("aucun critère est choisi")
+    public void aucunCritereEstChoisi() {
+        spotFormCriterias = new SpotFormCriterias();
+        spotFormCriterias.setPays("");
+        spotFormCriterias.setRegion("");
+        spotFormCriterias.setOrientation("");
+        spotFormCriterias.setMultiSecteurs(false);
+        spotFormCriterias.setCotationMin("");
+        spotFormCriterias.setCotationMax("");
+    }
+
+    @When("le filtre est appliqué")
+    public void leFiltreEstApplique() {
+        spots = spotService.filterSpots(spotFormCriterias);
+    }
+
+    @Then("la liste contient {int} spots")
+    public void laListeContientSpots(int resultat) {
+        Assert.assertEquals(resultat,spots.size());
+    }
+
+    private String setEmptyIfNull(String value) {
+        return (value.equals("null") ? "" : value ) ;
+    }
+
+    @Given("les critères (.*), (.*), (.*), (.*), (.*), (.*) sont choisis")
+    public void lesCriteresPaysRegionOrientationSecteurCotationMinCotationMaxSontChoisis(String pays, String region, String orientation, String secteur, String cotationMin, String cotationMax) {
+        spotFormCriterias = new SpotFormCriterias();
+        spotFormCriterias.setPays(setEmptyIfNull(pays));
+        spotFormCriterias.setRegion(setEmptyIfNull(region));
+        spotFormCriterias.setOrientation(setEmptyIfNull(orientation));
+        spotFormCriterias.setMultiSecteurs((secteur.equals("true")));
+        spotFormCriterias.setCotationMin(setEmptyIfNull(cotationMin));
+        spotFormCriterias.setCotationMax(setEmptyIfNull(cotationMax));
+    }
+}

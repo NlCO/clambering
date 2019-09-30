@@ -15,10 +15,16 @@ public class Utilisateur {
     private Integer utilisateurId;
 
     @Column(unique = true)
+    private String email;
+
+    @Column(unique = true)
     private String pseudo;
 
     private String password;
 
-    @Column(unique = true)
-    private String email;
+    @Column(columnDefinition = "boolean default false")
+    private Boolean MembreAssociation;
+
+    @Transient
+    public String passwordConfirm;
 }

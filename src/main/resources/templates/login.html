@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Page de login</title>
+</head>
+<body>
+<main layout:fragment="content">
+    <div class="d-flex align-items-center flex-column mt-5">
+        <h1 class="h1 my-3">Log in</h1>
+        <form class="form-signin w-25" method="post" th:action="@{/login}" style="max-width: 420px">
+            <span th:utext="${message}"></span>
+            <div th:class="${error} ? 'text-danger' : ''" th:utext="${error}">
+            </div>
+            <div class="form-label-group my-2">
+                <label for="inputPseudo">Pseudo :</label>
+                <input id="inputPseudo" name="username" type="text" th:class="'form-control form-control-lg ' + (${error} ? 'is-invalid' : '')">
+            </div>
+            <div class="form-label-group my-2">
+                <label for="inputPassword">Password :</label>
+                <input id="inputPassword" name="password" type="password" th:class="'form-control form-control-lg ' + (${error} ? 'is-invalid' : '')">
+            </div>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+            <div class="mt-4">
+                <button class="btn-dark btn-lg btn-block" type="submit">Se loguer</button>
+            </div>
+            <h4 class="h4 text-center my-2"><a th:href="@{/registration}">Créer un compte</a></h4>
+        </form>
+    </div>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Inscription</title>
+</head>
+<body>
+
+
+<main layout:fragment="content">
+
+            <div class="container w-50 mt-5">
+                <h1 class="h1">Créer votre compte</h1>
+                <form method="post" th:object="${utilisateurForm}" th:action="@{/registration}">
+                    <div class="form-group">
+                        <label for="mail">E-mail :</label>
+                        <input type="text" id="mail" th:field="*{email}" th:class="'form-control form-control-lg ' + (${#fields.hasErrors('email')} ? 'is-invalid' : '')" required>
+                        <div class="invalid-feedback" th:utext="${#fields.errors('email')}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="pseudo">Pseudo :</label>
+                        <input type="text" id="pseudo" th:field="*{pseudo}" th:class="'form-control form-control-lg ' + (${#fields.hasErrors('pseudo')} ? 'is-invalid' : '')" required>
+                        <div class="invalid-feedback" th:utext="${#fields.errors('pseudo')}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password :</label>
+                        <input type="password" id="password" th:field="*{password}" th:class="'form-control form-control-lg ' + (${#fields.hasErrors('password')} ? 'is-invalid' : '')" required>
+                        <div class="invalid-feedback" th:utext="${#fields.errors('password')}"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="passwordConfirm">Confirmer le password :</label>
+                        <input type="password" id="passwordConfirm" th:field="*{passwordConfirm}" th:class="'form-control form-control-lg ' + (${#fields.hasErrors('passwordConfirm')} ? 'is-invalid' : '')" required>
+                        <div class="invalid-feedback" th:utext="${#fields.errors('passwordConfirm')}"></div>
+                    </div>
+                    <button class="btn-dark btn-lg btn-block" type="submit">Valider</button>
+                </form>
+            </div>
+</main>
+
+
+
+</body>
+</html>
+

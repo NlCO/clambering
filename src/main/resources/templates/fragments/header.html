@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
 <head>...</head>
 <body>
 
@@ -11,7 +11,7 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbar">
+  <div class="collapse navbar-collapse mr-auto" id="navbar">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
         <a class="nav-link" href="/">Home<span class="sr-only">(current)</span></a>
@@ -23,7 +23,18 @@
         <a class="nav-link disabled" href="#">Topos</a>
       </li>
     </ul>
+    <div th:if="${#authorization.expression('!isAuthenticated()')}">
+      <a class="btn btn-outline-success mr-3" role="button" th:href="@{/registration}">S'incrire</a>
+      <a class="btn btn-outline-success" role="button" th:href="@{/login}">Se Loguer</a>
+    </div>
+    <div th:if="${#authorization.expression('isAuthenticated()')}" class="d-flex align-content-center">
+      <span class="h3 text-success mr-3" th:utext="${#request.getRemoteUser()}"></span>
+      <button class="btn btn-outline-success" type="button" onclick="document.forms['logoutForm'].submit()">Se déconnecter</button>
+    </div>
   </div>
+  <form id="logoutForm" method="POST" th:action="@{/logout}">
+    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+  </form>
 </nav>
 
 </header>

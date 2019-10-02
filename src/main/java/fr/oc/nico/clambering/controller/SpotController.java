@@ -24,12 +24,6 @@ public class SpotController {
         this.spotService = spotService;
     }
 
-    @GetMapping("/")
-    public String essai() {
-        LOGGER.debug("Homapage");
-        return "test";
-    }
-
     @GetMapping("/spots")
     public String spotsListe(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
         model.addAttribute("spots", spotService.listeSpots());

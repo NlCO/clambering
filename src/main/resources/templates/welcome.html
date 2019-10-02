@@ -11,9 +11,7 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
     </form>
     <div class="container">
-        <h1>Bonjour <span th:utext="${#request.getRemoteUser()}"></span><a onclick="document.forms['logoutForm'].submit()">Logout</a></h1>
-
-
+        <h1>Bonjour</h1>
     </div>
     <div class="container">
         <a class="btn btn-dark btn-lg" role="button" th:href="@{/spots}">Consulter les spots</a>
@@ -26,7 +24,6 @@
         <p>connectez vous et commentez vos impressions sur les spots proposés</p>
         <p>Inscrivez vous gratuitement pour partager vos informations ou vos TOPOs</p>
         -->
-
     </div>
 
 </main>

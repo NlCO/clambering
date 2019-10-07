@@ -80,7 +80,7 @@
                                         <tr th:each="voie : ${secteur.voies}">
                                             <td class="text-left" th:utext="${voie.nom}"></td>
                                             <td th:utext="${voie.longueurs.size()}"></td>
-                                            <td><span th:utext="${#numbers.formatDecimal(#aggregates.sum(voie.longueurs.![hauteur]),1,2,'COMMA')}"></span> m</td>
+                                            <td><span th:utext="${#aggregates.sum(voie.longueurs.![hauteur])}"></span> m</td>
                                             <td th:utext="${#aggregates.sum(voie.longueurs.![degaine])}"></td>
                                             <td th:utext="${voie.cotationMin}"></td>
                                             <td th:utext="${voie.cotationMax}"></td>

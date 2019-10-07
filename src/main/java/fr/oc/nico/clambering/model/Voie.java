@@ -34,7 +34,7 @@ public class Voie implements Serializable {
     private String cotationMax;
 
     @Transient
-    private Float hauteur;
+    private Integer hauteur;
 
     public String getCotationMin() {
         return longueurs.stream().min(Comparator.comparing(Longueur::getCotation)).orElseThrow(NoSuchElementException::new).getCotation();
@@ -52,8 +52,8 @@ public class Voie implements Serializable {
         this.cotationMax = getCotationMax();
     }
 
-    public Float getHauteur() {
-        return longueurs.stream().map(Longueur::getHauteur).reduce(0.0f, Float::sum);
+    public Integer getHauteur() {
+        return longueurs.stream().map(Longueur::getHauteur).reduce(0, Integer::sum);
     }
 
     public void setHauteur() {

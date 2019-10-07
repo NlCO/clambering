@@ -52,10 +52,10 @@ public class Spot implements Serializable {
     private String cotationMax;
 
     @Transient
-    private Float hauteurMin;
+    private Integer hauteurMin;
 
     @Transient
-    private Float hauteurMax;
+    private Integer hauteurMax;
 
     public String getCotationMax() {
         return secteurs.stream().max(Comparator.comparing(Secteur::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
@@ -73,7 +73,7 @@ public class Spot implements Serializable {
         this.cotationMin = getCotationMin();
     }
 
-    public Float getHauteurMin() {
+    public Integer getHauteurMin() {
         return secteurs.stream().min(Comparator.comparing(Secteur::getHauteurMin)).orElseThrow(NoSuchElementException::new).getHauteurMin();
     }
 
@@ -81,7 +81,7 @@ public class Spot implements Serializable {
         this.hauteurMin = getHauteurMin();
     }
 
-    public Float getHauteurMax() {
+    public Integer getHauteurMax() {
         return secteurs.stream().max(Comparator.comparing(Secteur::getHauteurMax)).orElseThrow(NoSuchElementException::new).getHauteurMax();
     }
 

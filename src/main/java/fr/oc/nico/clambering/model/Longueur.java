@@ -20,7 +20,7 @@ public class Longueur {
 
     private String nom;
 
-    private Float hauteur;
+    private Integer hauteur;
 
     private String cotation;
 

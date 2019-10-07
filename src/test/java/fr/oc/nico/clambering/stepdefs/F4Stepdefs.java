@@ -52,7 +52,7 @@ public class F4Stepdefs {
     }
 
     @And("contenant une longueur (.*), de longueur (.*), de cotation (.*) avec (.*) degaines")
-    public void contenantUneLongueurFEATURELONGUEURDeLongueurFDeCotationAAvecDegaine(String longueurName, float hauteur, String cotation, int degaine) {
+    public void contenantUneLongueurFEATURELONGUEURDeLongueurFDeCotationAAvecDegaine(String longueurName, int hauteur, String cotation, int degaine) {
         longueur1 = new Longueur();
         longueur1.setNom(longueurName);
         longueur1.setHauteur(hauteur);
@@ -89,9 +89,9 @@ public class F4Stepdefs {
     }
 
     @And("sa hauteur max et mini est de (.*) m")
-    public void saHauteurMaxEtMiniEstDeM(float hauteur) {
-        Assert.assertEquals(saveSpot.getHauteurMin(), hauteur, 0.0);
-        Assert.assertEquals(saveSpot.getHauteurMax(), hauteur, 0.0);
+    public void saHauteurMaxEtMiniEstDeM(int hauteur) {
+        Assert.assertEquals(saveSpot.getHauteurMin(), hauteur, 0);
+        Assert.assertEquals(saveSpot.getHauteurMax(), hauteur, 0);
     }
 
     @And("sa cotation max et min est (.*)")

@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.List;
@@ -36,10 +37,10 @@ public class Secteur implements Serializable {
     private String cotationMax;
 
     @Transient
-    private Float hauteurMin;
+    private Integer hauteurMin;
 
     @Transient
-    private Float hauteurMax;
+    private Integer hauteurMax;
 
     public String getCotationMax() {
         return voies.stream().max(Comparator.comparing(Voie::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
@@ -57,7 +58,7 @@ public class Secteur implements Serializable {
         this.cotationMin = getCotationMin();
     }
 
-    public Float getHauteurMin() {
+    public Integer getHauteurMin() {
         return voies.stream().min(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 
@@ -65,7 +66,7 @@ public class Secteur implements Serializable {
         this.hauteurMin = getHauteurMin();
     }
 
-    public Float getHauteurMax() {
+    public Integer getHauteurMax() {
         return voies.stream().max(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 

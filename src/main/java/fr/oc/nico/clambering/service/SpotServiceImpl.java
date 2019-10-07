@@ -55,4 +55,9 @@ public class SpotServiceImpl implements SpotService {
         return new SpotFormInfo(paysRepository.findAll(), regionRepository.findAll(), orientations, cotations);
     }
 
+    @Override
+    public Spot ajouterSpot(Spot newSpot) {
+        return spotRepository.save(newSpot);
+    }
+
 }

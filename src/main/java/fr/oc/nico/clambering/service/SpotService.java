@@ -17,4 +17,5 @@ public interface SpotService {
 
     SpotFormInfo getSpotFormInfo();
 
+    Spot ajouterSpot(Spot newSpot);
 }

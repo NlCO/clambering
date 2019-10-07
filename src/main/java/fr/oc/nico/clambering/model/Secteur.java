@@ -24,10 +24,9 @@ public class Secteur implements Serializable {
     private String description;
 
     @ManyToOne
-    @JoinColumn
     private Spot spot;
 
-    @OneToMany(mappedBy = "secteur")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "secteur")
     private List<Voie> voies;
 
     @Transient

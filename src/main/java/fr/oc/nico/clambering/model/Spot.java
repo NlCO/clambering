@@ -2,9 +2,11 @@ package fr.oc.nico.clambering.model;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -36,7 +38,7 @@ public class Spot implements Serializable {
 
     private boolean tagAmiEscalade;
 
-    @OneToMany(mappedBy = "spot")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spot")
     private List<Secteur> secteurs;
 
     @ManyToOne

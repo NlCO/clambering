@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -19,22 +20,29 @@ public class Voie implements Serializable {
     private Integer voieId;
 
     private String nom;
-
     @ManyToOne
-    @JoinColumn
+    //@JoinColumn
     private Secteur secteur;
-
-    @OneToMany(mappedBy = "voie")
-    private List<Longueur> longueurs;
-
+    @OneToMany(mappedBy = "voie", cascade = CascadeType.ALL)
+    private List<Longueur> longueurs = new ArrayList<>();
     @Transient
     private String cotationMin;
-
     @Transient
     private String cotationMax;
-
     @Transient
     private Integer hauteur;
+
+    public Voie() {
+    }
+
+    public Voie(String nom) {
+        this.nom = nom;
+    }
+
+    public void addLongueur(Longueur longueur) {
+        this.longueurs.add(longueur);
+        longueur.setVoie(this);
+    }
 
     public String getCotationMin() {
         return longueurs.stream().min(Comparator.comparing(Longueur::getCotation)).orElseThrow(NoSuchElementException::new).getCotation();

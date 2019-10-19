@@ -1,5 +1,6 @@
 package fr.oc.nico.clambering.service;
 
+import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.model.SpotFormCriterias;
 import fr.oc.nico.clambering.model.SpotFormInfo;
@@ -17,5 +18,7 @@ public interface SpotService {
 
     SpotFormInfo getSpotFormInfo();
 
-    Spot ajouterSpot(Spot newSpot);
+    Spot ajouterSpot(SpotFormRegistration newSpot);
+
+    SpotFormRegistration getEmptySpot();
 }

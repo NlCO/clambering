@@ -2,7 +2,6 @@ package fr.oc.nico.clambering.model;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -36,26 +35,40 @@ public class Spot implements Serializable {
 
     private Float latitude;
 
-    private boolean tagAmiEscalade;
+    private boolean tagAmiEscalade = false;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "spot")
-    private List<Secteur> secteurs;
-
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
+    private List<Secteur> secteurs = new ArrayList<>();
     @ManyToOne
     @JoinColumn
     private Region region;
-
     @Transient
     private String cotationMin;
-
     @Transient
     private String cotationMax;
-
     @Transient
     private Integer hauteurMin;
-
     @Transient
     private Integer hauteurMax;
+
+    public Spot(String nom, Region region, String description, String acces, String orientation, Float longitude, Float latitude) {
+        this.nom = nom;
+        this.description = description;
+        this.acces = acces;
+        this.orientation = orientation;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.region = region;
+    }
+
+    public Spot() {
+
+    }
+
+    public void addSecteur(Secteur secteur) {
+        this.secteurs.add(secteur);
+        secteur.setSpot(this);
+    }
 
     public String getCotationMax() {
         return secteurs.stream().max(Comparator.comparing(Secteur::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();

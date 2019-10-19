@@ -1,9 +1,8 @@
 package fr.oc.nico.clambering.service;
 
 
-import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.model.SpotFormCriterias;
-import fr.oc.nico.clambering.model.SpotFormInfo;
+import fr.oc.nico.clambering.DTO.SpotFormRegistration;
+import fr.oc.nico.clambering.model.*;
 import fr.oc.nico.clambering.repository.PaysRepository;
 import fr.oc.nico.clambering.repository.RegionRepository;
 import fr.oc.nico.clambering.repository.SpotRepository;
@@ -56,8 +55,20 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public Spot ajouterSpot(Spot newSpot) {
-        return spotRepository.save(newSpot);
+    public Spot ajouterSpot(SpotFormRegistration newSpot) {
+        Longueur tmpLongueur = new Longueur(newSpot.getLongueurNom(), newSpot.getHauteur(), newSpot.getCotation(), newSpot.getDegaine());
+        Voie tmpVoie = new Voie(newSpot.getVoieNom());
+        tmpVoie.addLongueur(tmpLongueur);
+        Secteur tmpSecteur = new Secteur(newSpot.getSecteurNom(), newSpot.getSecteurDescription());
+        tmpSecteur.addVoie(tmpVoie);
+        Spot addSpot = new Spot(newSpot.getSpotNom(), regionRepository.findByNom(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude());
+        addSpot.addSecteur(tmpSecteur);
+        return spotRepository.save(addSpot);
+    }
+
+    @Override
+    public SpotFormRegistration getEmptySpot() {
+        return new SpotFormRegistration();
     }
 
 }

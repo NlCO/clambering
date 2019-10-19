@@ -1,5 +1,7 @@
 package fr.oc.nico.clambering.controller;
 
+import fr.oc.nico.clambering.DTO.SpotFormRegistration;
+import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.model.SpotFormCriterias;
 import fr.oc.nico.clambering.service.SpotService;
 import org.slf4j.Logger;
@@ -48,5 +50,27 @@ public class SpotController {
 
         LOGGER.debug("affichage de la les infos du spots");
         return "spot";
+    }
+
+    @GetMapping("/spotRegistration")
+    public String spotRegistration(Model model) {
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotRegistrationForm", spotService.getEmptySpot());
+
+        LOGGER.debug("affichage de la page de création de spot");
+        return "spotRegistration";
+    }
+
+    @PostMapping("/spotRegistration")
+    public String spotRegistration(Model model, @ModelAttribute("spotRegistrationForm") SpotFormRegistration newSpot) {
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        Spot saveSpot = spotService.ajouterSpot(newSpot);
+
+        if (saveSpot != null) {
+            return "redirect:/spots/" + saveSpot.getSpotId();
+        }
+
+        LOGGER.debug("affichage du nouveau post");
+        return "spotRegistration";
     }
 }

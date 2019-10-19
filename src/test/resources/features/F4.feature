@@ -5,7 +5,7 @@ Feature: F4 - Partager des spots
   Background: L'utilisateur est connecté
 
   Scenario: Ajout de spot
-    Given un spot inexistant FEATURE 4 SPOT
+    Given un spot inexistant FEATURE 4 SPOT de Piemonte
     And contenant un secteur FEATURE 4 SECTEUR
     And contenant une voie FEATURE 4 VOIE
     And contenant une longueur FEATURE 4 LONGUEUR, de longueur 10, de cotation 4a avec 3 degaines

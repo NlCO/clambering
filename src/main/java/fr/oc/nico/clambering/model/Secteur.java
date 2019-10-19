@@ -4,8 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import javax.persistence.criteria.CriteriaBuilder;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -25,24 +25,34 @@ public class Secteur implements Serializable {
     private String description;
 
     @ManyToOne
+    //@JoinColumn
     private Spot spot;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "secteur")
-    private List<Voie> voies;
-
+    @OneToMany(mappedBy = "secteur", cascade = CascadeType.ALL)
+    private List<Voie> voies = new ArrayList<>();
     @Transient
     private String cotationMin;
-
     @Transient
     private String cotationMax;
-
     @Transient
     private Integer hauteurMin;
-
     @Transient
     private Integer hauteurMax;
 
-    public String getCotationMax() {
+    public Secteur(String nom, String description) {
+        this.nom = nom;
+        this.description = description;
+    }
+
+    public Secteur() {
+    }
+
+    public void addVoie(Voie voie) {
+        this.voies.add(voie);
+        voie.setSecteur(this);
+    }
+
+    String getCotationMax() {
         return voies.stream().max(Comparator.comparing(Voie::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
     }
 
@@ -50,7 +60,7 @@ public class Secteur implements Serializable {
         this.cotationMax = getCotationMax();
     }
 
-    public String getCotationMin() {
+    String getCotationMin() {
         return voies.stream().min(Comparator.comparing(Voie::getCotationMin)).orElseThrow(NoSuchElementException::new).getCotationMin();
     }
 
@@ -58,7 +68,7 @@ public class Secteur implements Serializable {
         this.cotationMin = getCotationMin();
     }
 
-    public Integer getHauteurMin() {
+    Integer getHauteurMin() {
         return voies.stream().min(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 
@@ -66,7 +76,7 @@ public class Secteur implements Serializable {
         this.hauteurMin = getHauteurMin();
     }
 
-    public Integer getHauteurMax() {
+    Integer getHauteurMax() {
         return voies.stream().max(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 

@@ -4,10 +4,12 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Longueur;
 import fr.oc.nico.clambering.model.Secteur;
 import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.model.Voie;
+import fr.oc.nico.clambering.repository.RegionRepository;
 import fr.oc.nico.clambering.repository.SpotRepository;
 import fr.oc.nico.clambering.service.SpotService;
 import org.junit.Assert;
@@ -17,63 +19,48 @@ import java.util.List;
 
 public class F4Stepdefs {
 
-    private SpotService spotService;
-    private SpotRepository spotRepository;
+    private final SpotService spotService;
+    private final SpotRepository spotRepository;
+    private final RegionRepository regionRepository;
 
-    private Spot spot1;
-    private Secteur secteur1;
-    private Voie voie1;
-    private Longueur longueur1;
+    private SpotFormRegistration spot1;
 
     private Spot saveSpot;
 
-    public F4Stepdefs(SpotService spotService, SpotRepository spotRepository) {
+    public F4Stepdefs(SpotService spotService, SpotRepository spotRepository, RegionRepository regionRepository) {
         this.spotService = spotService;
         this.spotRepository = spotRepository;
+        this.regionRepository = regionRepository;
+        this.spot1 = new SpotFormRegistration();
     }
 
-    @Given("un spot inexistant (.*)$")
-    public void unSpotInexistantFEATURESPOT(String spotName) {
+    @Given("un spot inexistant (.*) de (.*)$")
+    public void unSpotInexistantFEATURESPOT(String spotName, String region) {
         Assert.assertFalse("Le spot " + spotName + "n'existe pas", spotRepository.findByNom(spotName).isPresent());
-        spot1 = new Spot();
-        spot1.setNom(spotName);
+        spot1.setSpotNom(spotName);
+        spot1.setRegion(region);
     }
 
     @And("contenant un secteur (.*)$")
     public void contenantUnSecteurFEATURESECTEUR(String secteurName) {
-        secteur1 = new Secteur();
-        secteur1.setNom(secteurName);
+        spot1.setSecteurNom(secteurName);
     }
 
     @And("contenant une voie (.*)$")
     public void contenantUneVoieFEATUREVOIE(String voieName) {
-        voie1 = new Voie();
-        voie1.setNom(voieName);
+        spot1.setVoieNom(voieName);
     }
 
     @And("contenant une longueur (.*), de longueur (.*), de cotation (.*) avec (.*) degaines")
     public void contenantUneLongueurFEATURELONGUEURDeLongueurFDeCotationAAvecDegaine(String longueurName, int hauteur, String cotation, int degaine) {
-        longueur1 = new Longueur();
-        longueur1.setNom(longueurName);
-        longueur1.setHauteur(hauteur);
-        longueur1.setCotation(cotation);
-        longueur1.setDegaine(degaine);
+        spot1.setLongueurNom(longueurName);
+        spot1.setHauteur(hauteur);
+        spot1.setCotation(cotation);
+        spot1.setDegaine(degaine);
     }
 
     @When("le formulaire est rempli et envoyé")
     public void leFormulaireEstRempliEtEnvoye() {
-        List<Longueur> longueurs = new ArrayList<>();
-        longueurs.add(longueur1);
-        voie1.setLongueurs(longueurs);
-
-        List<Voie> voies = new ArrayList<>();
-        voies.add(voie1);
-        secteur1.setVoies(voies);
-
-        List<Secteur> secteurs = new ArrayList<>();
-        secteurs.add(secteur1);
-        spot1.setSecteurs(secteurs);
-
         saveSpot = spotService.ajouterSpot(spot1);
     }
 
@@ -84,6 +71,7 @@ public class F4Stepdefs {
 
     @And("il contient (.*) secteur nommé (.*)$")
     public void ilContientSecteurNommeFEATURESECTEUR(int nbSecteur, String secteurName) {
+        saveSpot = spotRepository.findByNom(spot1.getSpotNom()).orElseThrow(null) ;
         Assert.assertEquals(nbSecteur, saveSpot.getSecteurs().size());
         Assert.assertEquals(secteurName, saveSpot.getSecteurs().get(0).getNom());
     }

@@ -2,8 +2,8 @@ package fr.oc.nico.clambering.service;
 
 import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.model.SpotFormCriterias;
-import fr.oc.nico.clambering.model.SpotFormInfo;
+import fr.oc.nico.clambering.DTO.SpotFormCriterias;
+import fr.oc.nico.clambering.DTO.SpotFormInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

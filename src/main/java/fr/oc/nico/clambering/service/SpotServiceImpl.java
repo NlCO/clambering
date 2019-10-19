@@ -1,6 +1,8 @@
 package fr.oc.nico.clambering.service;
 
 
+import fr.oc.nico.clambering.DTO.SpotFormCriterias;
+import fr.oc.nico.clambering.DTO.SpotFormInfo;
 import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.*;
 import fr.oc.nico.clambering.repository.PaysRepository;

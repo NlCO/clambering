@@ -4,7 +4,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.model.SpotFormCriterias;
+import fr.oc.nico.clambering.DTO.SpotFormCriterias;
 import fr.oc.nico.clambering.service.SpotService;
 import org.junit.Assert;
 
@@ -13,24 +13,15 @@ import java.util.List;
 public class F2StepDef {
 
     private SpotService spotService;
-
-    F2StepDef(SpotService spotService){
-        this.spotService = spotService;
-    }
-
     private SpotFormCriterias spotFormCriterias;
     private List<Spot> spots;
-
+    F2StepDef(SpotService spotService) {
+        this.spotService = spotService;
+    }
 
     @Given("aucun critère est choisi")
     public void aucunCritereEstChoisi() {
         spotFormCriterias = new SpotFormCriterias();
-        spotFormCriterias.setPays("");
-        spotFormCriterias.setRegion("");
-        spotFormCriterias.setOrientation("");
-        spotFormCriterias.setMultiSecteurs(false);
-        spotFormCriterias.setCotationMin("");
-        spotFormCriterias.setCotationMax("");
     }
 
     @When("le filtre est appliqué")
@@ -40,11 +31,11 @@ public class F2StepDef {
 
     @Then("la liste contient {int} spots")
     public void laListeContientSpots(int resultat) {
-        Assert.assertEquals(resultat,spots.size());
+        Assert.assertEquals(resultat, spots.size());
     }
 
     private String setEmptyIfNull(String value) {
-        return (value.equals("null") ? "" : value ) ;
+        return (value.equals("null") ? "" : value);
     }
 
     @Given("les critères (.*), (.*), (.*), (.*), (.*), (.*) sont choisis")

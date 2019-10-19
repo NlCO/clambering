@@ -9,12 +9,12 @@
 <main layout:fragment="content">
     <div class="container-fluid mt-2 w-75">
         <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <h4>Spots : <span th:text="${spots.size()}"></span></h4>
-            <a class="card-link" data-toggle="collapse" href="#collapseFilterForm">Filtre  <i class="fas fa-chevron-down"></i></a>
+        <div class="card-header align-items-center d-flex justify-content-between">
+            <a class="btn btn-dark" role="button" th:href="@{/spotRegistration}">Ajouter un spot</a>
+            <a class="card-link h3" data-toggle="collapse" href="#collapseFilterForm"><span class="badge badge-primary">Filtre  : <span class="badge badge-pill badge-light" th:utext="${spots.size()}"></span></span>  <i class="fas fa-chevron-down"></i></a>
         </div>
         <div class="card-body collapse" id="collapseFilterForm">
-        <form th:action="@{/spots}" th:object="${spotFormCriterias}" method="post">
+        <form th:action="@{/spots}" th:object="${spotFormCriterias}" method="get">
             <div class="row justify-content-around">
                 <div class="m-2 d-flex align-items-start flex-column">
                     <h5>Pays : </h5>

@@ -2,7 +2,7 @@ package fr.oc.nico.clambering.controller;
 
 import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.model.SpotFormCriterias;
+import fr.oc.nico.clambering.DTO.SpotFormCriterias;
 import fr.oc.nico.clambering.service.SpotService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,21 +28,22 @@ public class SpotController {
 
     @GetMapping("/spots")
     public String spotsListe(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
-        model.addAttribute("spots", spotService.listeSpots());
+        //model.addAttribute("spots", spotService.listeSpots());
+        model.addAttribute("spots", spotService.filterSpots(spotFormCriterias));
         model.addAttribute("formData", spotService.getSpotFormInfo());
 
         LOGGER.debug("affichage de la liste des spots");
         return "spots";
     }
 
-    @PostMapping("/spots")
-    public String spotsFilter(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
-        model.addAttribute("spots", spotService.filterSpots(spotFormCriterias));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
-
-        LOGGER.debug("affichage de la liste des spots filtrés");
-        return "spots";
-    }
+//    @PostMapping("/spots")
+//    public String spotsFilter(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
+//        model.addAttribute("spots", spotService.filterSpots(spotFormCriterias));
+//        model.addAttribute("formData", spotService.getSpotFormInfo());
+//
+//        LOGGER.debug("affichage de la liste des spots filtrés");
+//        return "spots";
+//    }
 
     @GetMapping("/spots/{spotId}")
     public String spotInfo(Model model, @PathVariable Integer spotId) {

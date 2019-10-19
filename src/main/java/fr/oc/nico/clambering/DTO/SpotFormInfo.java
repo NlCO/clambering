@@ -1,5 +1,7 @@
-package fr.oc.nico.clambering.model;
+package fr.oc.nico.clambering.DTO;
 
+import fr.oc.nico.clambering.model.Pays;
+import fr.oc.nico.clambering.model.Region;
 import lombok.Getter;
 import lombok.Setter;
 

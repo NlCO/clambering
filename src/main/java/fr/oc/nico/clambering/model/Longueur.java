@@ -15,10 +15,9 @@ public class Longueur {
     private Integer longueurId;
 
     @ManyToOne
-    //@JoinColumn
     private Voie voie;
 
-    private String nom;
+    private String longueurLibelle;
 
     private Integer hauteur;
 
@@ -33,8 +32,8 @@ public class Longueur {
     public Longueur() {
     }
 
-    public Longueur(String nom, Integer hauteur, String cotation, Integer degaine) {
-        this.nom = nom;
+    public Longueur(String longueurLibelle, Integer hauteur, String cotation, Integer degaine) {
+        this.longueurLibelle = longueurLibelle;
         this.hauteur = hauteur;
         this.cotation = cotation;
         this.degaine = degaine;

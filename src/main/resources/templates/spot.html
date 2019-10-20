@@ -78,7 +78,7 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="voie : ${secteur.voies}">
-                                            <td class="text-left" th:utext="${voie.nom}"></td>
+                                            <td class="text-left" th:utext="${voie.voieLibelle}"></td>
                                             <td th:utext="${voie.longueurs.size()}"></td>
                                             <td><span th:utext="${#aggregates.sum(voie.longueurs.![hauteur])}"></span> m</td>
                                             <td th:utext="${#aggregates.sum(voie.longueurs.![degaine])}"></td>

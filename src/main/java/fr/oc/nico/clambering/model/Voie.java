@@ -19,9 +19,9 @@ public class Voie implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer voieId;
 
-    private String nom;
+    private String voieLibelle;
+
     @ManyToOne
-    //@JoinColumn
     private Secteur secteur;
     @OneToMany(mappedBy = "voie", cascade = CascadeType.ALL)
     private List<Longueur> longueurs = new ArrayList<>();
@@ -35,8 +35,8 @@ public class Voie implements Serializable {
     public Voie() {
     }
 
-    public Voie(String nom) {
-        this.nom = nom;
+    public Voie(String voieLibelle) {
+        this.voieLibelle = voieLibelle;
     }
 
     public void addLongueur(Longueur longueur) {

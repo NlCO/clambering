@@ -60,12 +60,12 @@
                     <div th:each ="secteur : ${spot.secteurs}" class="card">
                         <div class="card-header">
                             <a class="card-link" data-toggle="collapse" th:attr="href='#collapseSecteurId_'+${secteur.secteurId}">
-                                <span th:utext="${secteur.nom}">...</span>
+                                <span th:utext="${secteur.secteurLibelle}">...</span>
                             </a>
                         </div>
                         <div th:attr="id='collapseSecteurId_'+${secteur.secteurId}" class="collapse" data-parent="#accordion">
                             <div class="card-body">
-                                <p><b>Informations : </b><span th:utext="${secteur.description}"></span></p>
+                                <p><b>Informations : </b><span th:utext="${secteur.secteurDescription}"></span></p>
                                 <div class="table-responsive">
                                     <table class="table table-borderless text-center">
                                         <thead>

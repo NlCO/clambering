@@ -67,7 +67,7 @@ public class F4Stepdefs {
     public void ilContientSecteurNommeFEATURESECTEUR(int nbSecteur, String secteurName) {
         saveSpot = spotRepository.findBySpotLibelle(spot1.getSpotNom()).orElseThrow(null) ;
         Assert.assertEquals(nbSecteur, saveSpot.getSecteurs().size());
-        Assert.assertEquals(secteurName, saveSpot.getSecteurs().get(0).getNom());
+        Assert.assertEquals(secteurName, saveSpot.getSecteurs().get(0).getSecteurLibelle());
     }
 
     @And("sa hauteur max et mini est de (.*) m")

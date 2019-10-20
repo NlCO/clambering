@@ -19,13 +19,12 @@ public class Secteur implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer secteurId;
 
-    private String nom;
+    private String secteurLibelle;
 
     @Column(columnDefinition = "text")
-    private String description;
+    private String secteurDescription;
 
     @ManyToOne
-    //@JoinColumn
     private Spot spot;
 
     @OneToMany(mappedBy = "secteur", cascade = CascadeType.ALL)
@@ -39,9 +38,9 @@ public class Secteur implements Serializable {
     @Transient
     private Integer hauteurMax;
 
-    public Secteur(String nom, String description) {
-        this.nom = nom;
-        this.description = description;
+    public Secteur(String secteurLibelle, String secteurDescription) {
+        this.secteurLibelle = secteurLibelle;
+        this.secteurDescription = secteurDescription;
     }
 
     public Secteur() {

@@ -72,8 +72,7 @@
             <div th:each ="spot : ${spots}" class="card m-4 rounded" style="min-width:250px; max-width:250px">
                 <img class="card-img-top" th:src="'/img/' + ${spot.image}" th:alt="${spot.image}" style="height:200px">
                 <div class="card-body">
-                    <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.nom}">...</h4></a>
-                    <p class="card-text">Secteur : <span th:utext="${spot.secteurs.size()}"></span></p>
+                    <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.spotLibelle}">...</h4></a>
                 </div>
             </div>
         </div>

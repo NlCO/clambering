@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface SpotRepository extends JpaRepository<Spot, Integer>, SpotCustomRepository {
 
-    Optional<Spot> findByNom(String nom);
+    Optional<Spot> findBySpotLibelle(String spotLibelle);
 }

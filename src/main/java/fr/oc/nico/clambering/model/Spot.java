@@ -19,10 +19,10 @@ public class Spot implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer spotId;
 
-    private String nom;
+    private String spotLibelle;
 
     @Column(columnDefinition = "text")
-    private String description;
+    private String spotDescription;
 
     @Column(columnDefinition = "text")
     private String acces;
@@ -40,7 +40,6 @@ public class Spot implements Serializable {
     @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
     private List<Secteur> secteurs = new ArrayList<>();
     @ManyToOne
-    @JoinColumn
     private Region region;
     @Transient
     private String cotationMin;
@@ -51,9 +50,9 @@ public class Spot implements Serializable {
     @Transient
     private Integer hauteurMax;
 
-    public Spot(String nom, Region region, String description, String acces, String orientation, Float longitude, Float latitude) {
-        this.nom = nom;
-        this.description = description;
+    public Spot(String spotLibelle, Region region, String spotDescription, String acces, String orientation, Float longitude, Float latitude) {
+        this.spotLibelle = spotLibelle;
+        this.spotDescription = spotDescription;
         this.acces = acces;
         this.orientation = orientation;
         this.longitude = longitude;

@@ -5,17 +5,11 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import fr.oc.nico.clambering.DTO.SpotFormRegistration;
-import fr.oc.nico.clambering.model.Longueur;
-import fr.oc.nico.clambering.model.Secteur;
 import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.model.Voie;
 import fr.oc.nico.clambering.repository.RegionRepository;
 import fr.oc.nico.clambering.repository.SpotRepository;
 import fr.oc.nico.clambering.service.SpotService;
 import org.junit.Assert;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class F4Stepdefs {
 
@@ -36,7 +30,7 @@ public class F4Stepdefs {
 
     @Given("un spot inexistant (.*) de (.*)$")
     public void unSpotInexistantFEATURESPOT(String spotName, String region) {
-        Assert.assertFalse("Le spot " + spotName + "n'existe pas", spotRepository.findByNom(spotName).isPresent());
+        Assert.assertFalse("Le spot " + spotName + "n'existe pas", spotRepository.findBySpotLibelle(spotName).isPresent());
         spot1.setSpotNom(spotName);
         spot1.setRegion(region);
     }
@@ -66,12 +60,12 @@ public class F4Stepdefs {
 
     @Then("le spot (.*) est présent dans la base")
     public void leSpotFEATURESPOTEstPresentDansLaBase(String addSpot) {
-        Assert.assertTrue("Le spot " + addSpot + " est présent dans la base", spotRepository.findByNom(addSpot).isPresent());
+        Assert.assertTrue("Le spot " + addSpot + " est présent dans la base", spotRepository.findBySpotLibelle(addSpot).isPresent());
     }
 
     @And("il contient (.*) secteur nommé (.*)$")
     public void ilContientSecteurNommeFEATURESECTEUR(int nbSecteur, String secteurName) {
-        saveSpot = spotRepository.findByNom(spot1.getSpotNom()).orElseThrow(null) ;
+        saveSpot = spotRepository.findBySpotLibelle(spot1.getSpotNom()).orElseThrow(null) ;
         Assert.assertEquals(nbSecteur, saveSpot.getSecteurs().size());
         Assert.assertEquals(secteurName, saveSpot.getSecteurs().get(0).getNom());
     }

@@ -16,10 +16,9 @@ public class Region {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer regionId;
 
-    private String nom;
+    private String regionLibelle;
 
     @ManyToOne
-    @JoinColumn
     private Pays pays;
 
     @OneToMany(mappedBy = "region")

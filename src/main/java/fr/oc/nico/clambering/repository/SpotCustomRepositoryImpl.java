@@ -34,7 +34,7 @@ public class SpotCustomRepositoryImpl implements SpotCustomRepository {
         }
 
         if (!criterias.getRegion().equals("")) {
-            predicates.add(builder.equal(spotRoot.get("region").get("nom"), criterias.getRegion()));
+            predicates.add(builder.equal(spotRoot.get("region").get("regionLibelle"), criterias.getRegion()));
         }
 
         if (!criterias.getOrientation().equals("")) {

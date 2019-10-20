@@ -25,7 +25,7 @@
                         <label for="region" class="h5 mr-1">Région :</label>
                         <select id="region" class="custom-select m-auto" th:field="*{region}" required>
                             <option value=""></option>
-                            <option th:each="r : ${formData.getRegions()}" th:value="${r.getNom()}" th:utext="${r.getNom()}"></option>
+                            <option th:each="r : ${formData.getRegions()}" th:value="${r.regionLibelle}" th:utext="${r.regionLibelle}"></option>
                         </select>
                     </div>
                     <div class="form-group">

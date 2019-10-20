@@ -63,7 +63,7 @@ public class SpotServiceImpl implements SpotService {
         tmpVoie.addLongueur(tmpLongueur);
         Secteur tmpSecteur = new Secteur(newSpot.getSecteurNom(), newSpot.getSecteurDescription());
         tmpSecteur.addVoie(tmpVoie);
-        Spot addSpot = new Spot(newSpot.getSpotNom(), regionRepository.findByNom(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude());
+        Spot addSpot = new Spot(newSpot.getSpotNom(), regionRepository.findByRegionLibelle(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude());
         addSpot.addSecteur(tmpSecteur);
         return spotRepository.save(addSpot);
     }

@@ -20,7 +20,7 @@
                     <h5>Pays : </h5>
                     <select name="pays" class="custom-select m-auto" th:field="${spotFormCriterias.pays}">
                         <option value="">Tous</option>
-                        <option th:each="p : ${formData.getPays()}" th:value="${p.getNom()}" th:utext="${p.getNom()}"></option>
+                        <option th:each="p : ${formData.getPays()}" th:value="${p.getPaysLibelle()}" th:utext="${p.getPaysLibelle()}"></option>
                     </select>
                 </div>
                 <div class="m-2 d-flex align-items-start flex-column">

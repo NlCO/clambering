@@ -30,7 +30,7 @@ public class SpotCustomRepositoryImpl implements SpotCustomRepository {
         List<Predicate> predicates = new ArrayList<>();
 
         if (!criterias.getPays().equals("")) {
-            predicates.add(builder.equal(spotRoot.get("region").get("pays").get("nom"), criterias.getPays()));
+            predicates.add(builder.equal(spotRoot.get("region").get("pays").get("paysLibelle"), criterias.getPays()));
         }
 
         if (!criterias.getRegion().equals("")) {

@@ -28,22 +28,12 @@ public class SpotController {
 
     @GetMapping("/spots")
     public String spotsListe(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
-        //model.addAttribute("spots", spotService.listeSpots());
         model.addAttribute("spots", spotService.filterSpots(spotFormCriterias));
         model.addAttribute("formData", spotService.getSpotFormInfo());
 
         LOGGER.debug("affichage de la liste des spots");
         return "spots";
     }
-
-//    @PostMapping("/spots")
-//    public String spotsFilter(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
-//        model.addAttribute("spots", spotService.filterSpots(spotFormCriterias));
-//        model.addAttribute("formData", spotService.getSpotFormInfo());
-//
-//        LOGGER.debug("affichage de la liste des spots filtrés");
-//        return "spots";
-//    }
 
     @GetMapping("/spots/{spotId}")
     public String spotInfo(Model model, @PathVariable Integer spotId) {

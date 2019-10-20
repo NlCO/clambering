@@ -12,7 +12,7 @@
 <main layout:fragment="content" class="container ">
 
     <div class="jumbotron m-2">
-        <h5 class="text-center"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.code} + ' pr-5'"></span><span th:utext="${spot.region.pays.nom}"></span> - <span th:utext="${spot.region.nom}"></span> </h5>
+        <h5 class="text-center"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.codePays} + ' pr-5'"></span><span th:utext="${spot.region.pays.paysLibelle}"></span> - <span th:utext="${spot.region.nom}"></span> </h5>
         <h1 th:utext=" ${spot.nom}" class="text text-center"></h1>
         <p th:text="${spot.description}" class="text text-center text-justify">...</p>
     </div>

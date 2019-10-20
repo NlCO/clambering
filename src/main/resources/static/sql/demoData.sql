@@ -1,4 +1,4 @@
-INSERT INTO pays (nom,code) VALUES ('France','fr'),('Espagne','es'),('Italie','it');
+INSERT INTO pays (pays_libelle,code_pays) VALUES ('France','fr'),('Espagne','es'),('Italie','it');
 
 INSERT INTO region (nom,pays_pays_id) VALUES ('Nouvelle-Aquitaine',1),('Auvergne-Rhône-Alpes',1), ('Occitanie',1), ('Aragón',2), ('Navarra',2), ( 'Piemonte', 3);
 

@@ -14,3 +14,15 @@ Feature: F4 - Partager des spots
     And il contient 1 secteur nommé FEATURE 4 SECTEUR
     And sa hauteur max et mini est de 10 m
     And sa cotation max et min est 4a
+
+  Scenario: Modification de site
+    Given un spot existant FEATURE 4 SPOT
+    When je modifie son nom en SPOT FEATURE 4
+    And une longueur FEATURE 4 LONGUEUR2, de longueur 5, de cotation 6a avec 1 degaines est ajoutée
+    And la modification est soumise
+    Then le spot FEATURE 4 SPOT est absent dans la base
+    And le nouveau spot SPOT FEATURE 4 est présent dans la base
+    And il contient 2 longueurs
+    And sa hauteur max est de 15 m
+    And sa cotation max est de 6a
+    And sa cotation min est de 4a

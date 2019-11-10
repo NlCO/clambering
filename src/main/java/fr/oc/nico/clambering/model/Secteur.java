@@ -27,7 +27,7 @@ public class Secteur implements Serializable {
     @ManyToOne
     private Spot spot;
 
-    @OneToMany(mappedBy = "secteur", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "secteur", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Voie> voies = new ArrayList<>();
     @Transient
     private String cotationMin;
@@ -39,6 +39,12 @@ public class Secteur implements Serializable {
     private Integer hauteurMax;
 
     public Secteur(String secteurLibelle, String secteurDescription) {
+        this.secteurLibelle = secteurLibelle;
+        this.secteurDescription = secteurDescription;
+    }
+
+    public Secteur(Integer secteurId, String secteurLibelle, String secteurDescription) {
+        this.secteurId = secteurId;
         this.secteurLibelle = secteurLibelle;
         this.secteurDescription = secteurDescription;
     }

@@ -10,7 +10,11 @@
 <body>
 
 <main layout:fragment="content" class="container ">
-
+    <div th:if="${#authorization.expression('isAuthenticated()')}" class="mt-1 d-flex flex-row-reverse">
+        <form method="get" th:action="@{'/spots/' + ${spot.spotId} + '/spotEdition'}">
+            <button class="btn btn-dark" type="submit">Editer ce spot</button>
+        </form>
+    </div>
     <div class="jumbotron m-2">
         <h5 class="text-center"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.codePays} + ' pr-5'"></span><span th:utext="${spot.region.pays.paysLibelle}"></span> - <span th:utext="${spot.region.regionLibelle}"></span> </h5>
         <h1 th:utext=" ${spot.spotLibelle}" class="text text-center"></h1>

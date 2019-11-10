@@ -1,5 +1,6 @@
 package fr.oc.nico.clambering.controller;
 
+import fr.oc.nico.clambering.DTO.SpotEditForm;
 import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.DTO.SpotFormCriterias;
@@ -9,10 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 public class SpotController {
@@ -63,5 +64,69 @@ public class SpotController {
 
         LOGGER.debug("affichage du nouveau post");
         return "spotRegistration";
+    }
+
+    @GetMapping("/spots/{spotId}/spotEdition")
+    public String spotEdition(Model model, @PathVariable Integer spotId) {
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        model.addAttribute("spotEditForm", spotService.getSpotEditForm(spotService.spotInfo(spotId)));
+
+        LOGGER.debug("affichage de la page de création de spot");
+        return "spotEdition";
+    }
+
+    @PostMapping("/spots/{spotId}/spotEdition")
+    public String spotEdition(Model model, @PathVariable Integer spotId, final SpotEditForm spotEditForm) {
+        spotService.updateSpot(spotId, spotEditForm);
+        return "redirect:/spots/{spotId}";
+    }
+
+    @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"addSecteur"})
+    public String addSecteur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId){
+        spotService.addNewSecteurToSpot(spotEditForm);
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        return "spotEdition";
+    }
+
+    @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"addVoie"})
+    public String addVoie (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
+        spotService.addNewVoieToSpot(spotEditForm, req.getParameter("addVoie"));
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        return "spotEdition";
+    }
+
+    @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"addLongueur"})
+    public String addLongueur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
+        spotService.addNewLongueurToSpot(spotEditForm, req.getParameter("addLongueur"));
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        return "spotEdition";
+    }
+
+    @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"removeSecteur"})
+    public String removeSecteur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
+        spotService.removeSecteurToSpot(spotEditForm, req.getParameter("removeSecteur"));
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        return "spotEdition";
+    }
+
+    @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"removeVoie"})
+    public String removeVoie (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
+        spotService.removeVoieToSpot(spotEditForm, req.getParameter("removeVoie"));
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        return "spotEdition";
+    }
+
+    @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"removeLongueur"})
+    public String removeLongueur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
+        spotService.removeLongueurToSpot(spotEditForm, req.getParameter("removeLongueur"));
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+        model.addAttribute("spotEdit", spotId);
+        return "spotEdition";
     }
 }

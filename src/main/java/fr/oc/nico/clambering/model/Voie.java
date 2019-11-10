@@ -23,7 +23,7 @@ public class Voie implements Serializable {
 
     @ManyToOne
     private Secteur secteur;
-    @OneToMany(mappedBy = "voie", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "voie", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Longueur> longueurs = new ArrayList<>();
     @Transient
     private String cotationMin;
@@ -36,6 +36,11 @@ public class Voie implements Serializable {
     }
 
     public Voie(String voieLibelle) {
+        this.voieLibelle = voieLibelle;
+    }
+
+    public Voie(Integer voieId, String voieLibelle) {
+        this.voieId = voieId;
         this.voieLibelle = voieLibelle;
     }
 

@@ -38,4 +38,12 @@ public class Longueur {
         this.cotation = cotation;
         this.degaine = degaine;
     }
+
+    public Longueur(Integer longueurId,  String longueurLibelle, Integer hauteur, String cotation, Integer degaine) {
+        this.longueurId = longueurId;
+        this.longueurLibelle = longueurLibelle;
+        this.hauteur = hauteur;
+        this.cotation = cotation;
+        this.degaine = degaine;
+    }
 }

@@ -7,11 +7,13 @@ import lombok.Setter;
 @Setter
 public class LongueurFormRegistration {
 
-    private String longueurNom;
+    private Integer longueurId;
+
+    private String longueurNom = "";
 
     private Integer hauteur;
 
-    private String cotation;
+    private String cotation = "";
 
     private Integer idRelaiDebut = 0;
 
@@ -19,4 +21,16 @@ public class LongueurFormRegistration {
 
     private Integer degaine;
 
+    public LongueurFormRegistration() {
+    }
+
+    public LongueurFormRegistration(Integer longueurId, String longueurNom, Integer hauteur, String cotation, Integer degaine, Integer idRelaiDebut, Integer idRelaiFin) {
+        this.longueurId = longueurId;
+        this.longueurNom = longueurNom;
+        this.hauteur = hauteur;
+        this.cotation = cotation;
+        this.idRelaiDebut = idRelaiDebut;
+        this.idRelaiFin = idRelaiFin;
+        this.degaine = degaine;
+    }
 }

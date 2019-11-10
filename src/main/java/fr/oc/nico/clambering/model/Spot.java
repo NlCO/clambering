@@ -37,7 +37,7 @@ public class Spot implements Serializable {
 
     private boolean tagAmiEscalade = false;
 
-    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Secteur> secteurs = new ArrayList<>();
     @ManyToOne
     private Region region;
@@ -50,7 +50,7 @@ public class Spot implements Serializable {
     @Transient
     private Integer hauteurMax;
 
-    public Spot(String spotLibelle, Region region, String spotDescription, String acces, String orientation, Float longitude, Float latitude) {
+    public Spot(String spotLibelle, Region region, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image) {
         this.spotLibelle = spotLibelle;
         this.spotDescription = spotDescription;
         this.acces = acces;
@@ -58,6 +58,7 @@ public class Spot implements Serializable {
         this.longitude = longitude;
         this.latitude = latitude;
         this.region = region;
+        this.image = image;
     }
 
     public Spot() {

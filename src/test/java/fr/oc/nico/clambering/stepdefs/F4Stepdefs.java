@@ -4,9 +4,10 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
+import fr.oc.nico.clambering.DTO.LongueurFormRegistration;
+import fr.oc.nico.clambering.DTO.SpotEditForm;
 import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.repository.RegionRepository;
 import fr.oc.nico.clambering.repository.SpotRepository;
 import fr.oc.nico.clambering.service.SpotService;
 import org.junit.Assert;
@@ -15,16 +16,18 @@ public class F4Stepdefs {
 
     private final SpotService spotService;
     private final SpotRepository spotRepository;
-    private final RegionRepository regionRepository;
 
     private SpotFormRegistration spot1;
 
     private Spot saveSpot;
 
-    public F4Stepdefs(SpotService spotService, SpotRepository spotRepository, RegionRepository regionRepository) {
+    private Spot spot;
+    private SpotEditForm spotEditForm;
+    private Spot updateSpot;
+
+    public F4Stepdefs(SpotService spotService, SpotRepository spotRepository) {
         this.spotService = spotService;
         this.spotRepository = spotRepository;
-        this.regionRepository = regionRepository;
         this.spot1 = new SpotFormRegistration();
     }
 
@@ -80,5 +83,62 @@ public class F4Stepdefs {
     public void saCotationMaxEtMinEstA(String cotation) {
         Assert.assertEquals(cotation, saveSpot.getCotationMin());
         Assert.assertEquals(cotation, saveSpot.getCotationMax());
+    }
+
+    @Given("un spot existant (.*)$")
+    public void unSpotExistantFEATURESPOT(String spotName) {
+        spot = spotRepository.findBySpotLibelle(spotName).orElse(null);
+    }
+
+    @When("je modifie son nom en (.*)$")
+    public void jeModifieSonNomEnSPOTFEATURE4(String newName) {
+        spotEditForm = spotService.getSpotEditForm(spot);
+        spotEditForm.setSpotNom(newName);
+    }
+
+    @And("une longueur (.*), de longueur (.*), de cotation (.*) avec (.*) degaines est ajoutée")
+    public void uneLongueurFEATURELONGUEURDeLongueurDeCotationAAvecDegainesEstAjoutee(String newLongueurName, int hauteur, String cotation, int degaines) {
+        LongueurFormRegistration newLongueur = new LongueurFormRegistration();
+        newLongueur.setLongueurNom(newLongueurName);
+        newLongueur.setHauteur(hauteur);
+        newLongueur.setCotation(cotation);
+        newLongueur.setDegaine(degaines);
+        spotEditForm.getSecteurs().get(0).getVoies().get(0).addLongueur(newLongueur);
+    }
+
+    @And("la modification est soumise")
+    public void laModificationEstSoumise() {
+        updateSpot = spotService.updateSpot(spot.getSpotId(), spotEditForm);
+
+    }
+
+    @Then("le spot (.*) est absent dans la base")
+    public void leSpotFEATURESPOTEstAbsentDansLaBase(String spotName) {
+        Assert.assertFalse("Le spot " + spotName + " n'existe pas", spotRepository.findBySpotLibelle(spotName).isPresent());
+    }
+
+    @And("le nouveau spot (.*) est présent dans la base")
+    public void leNouveauSpotSPOTFEATUREEstPresentDansLaBase(String spotName) {
+        Assert.assertTrue("Le spot " + spotName + " n'existe pas", spotRepository.findBySpotLibelle(spotName).isPresent());
+    }
+
+    @And("il contient {int} longueurs")
+    public void ilContientLongueurs(int nbLongueur) {
+        Assert.assertEquals(nbLongueur, updateSpot.getSecteurs().get(0).getVoies().get(0).getLongueurs().size());
+    }
+
+    @And("sa hauteur max est de (.*) m")
+    public void saHauteurMaxM(Integer hauteurMax) {
+        Assert.assertEquals(hauteurMax, updateSpot.getHauteurMax());
+    }
+
+    @And("sa cotation max est de (.*)$")
+    public void saCotationMaxEstDeA(String coteMax) {
+        Assert.assertEquals(coteMax, updateSpot.getCotationMax());
+    }
+
+    @And("sa cotation min est de (.*)$")
+    public void saCotationMinEstDeA(String coteMin) {
+        Assert.assertEquals(coteMin, updateSpot.getCotationMin());
     }
 }

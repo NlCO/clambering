@@ -1,9 +1,7 @@
 package fr.oc.nico.clambering.service;
 
 
-import fr.oc.nico.clambering.DTO.SpotFormCriterias;
-import fr.oc.nico.clambering.DTO.SpotFormInfo;
-import fr.oc.nico.clambering.DTO.SpotFormRegistration;
+import fr.oc.nico.clambering.DTO.*;
 import fr.oc.nico.clambering.model.*;
 import fr.oc.nico.clambering.repository.PaysRepository;
 import fr.oc.nico.clambering.repository.RegionRepository;
@@ -24,11 +22,20 @@ public class SpotServiceImpl implements SpotService {
 
     private final RegionRepository regionRepository;
 
+    private final LongueurService longueurService;
+
+    private final VoieService voieService;
+
+    private final SecteurService secteurService;
+
     @Autowired
-    public SpotServiceImpl(SpotRepository spotRepository, PaysRepository paysRepository, RegionRepository regionRepository) {
+    public SpotServiceImpl(SpotRepository spotRepository, PaysRepository paysRepository, RegionRepository regionRepository, LongueurService longueurService, VoieService voieService, SecteurService secteurService) {
         this.spotRepository = spotRepository;
         this.paysRepository = paysRepository;
         this.regionRepository = regionRepository;
+        this.longueurService = longueurService;
+        this.voieService = voieService;
+        this.secteurService = secteurService;
     }
 
     @Override
@@ -63,7 +70,7 @@ public class SpotServiceImpl implements SpotService {
         tmpVoie.addLongueur(tmpLongueur);
         Secteur tmpSecteur = new Secteur(newSpot.getSecteurNom(), newSpot.getSecteurDescription());
         tmpSecteur.addVoie(tmpVoie);
-        Spot addSpot = new Spot(newSpot.getSpotNom(), regionRepository.findByRegionLibelle(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude());
+        Spot addSpot = new Spot(newSpot.getSpotNom(), regionRepository.findByRegionLibelle(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude(), "logo.png");
         addSpot.addSecteur(tmpSecteur);
         return spotRepository.save(addSpot);
     }
@@ -71,6 +78,79 @@ public class SpotServiceImpl implements SpotService {
     @Override
     public SpotFormRegistration getEmptySpot() {
         return new SpotFormRegistration();
+    }
+
+    @Override
+    public SpotEditForm getSpotEditForm(Spot spot) {
+        SpotEditForm spotEditForm = new SpotEditForm(spot.getRegion().getRegionLibelle(),spot.getSpotLibelle(), spot.getSpotDescription(), spot.getAcces(), spot.getOrientation(), spot.getLatitude(), spot.getLongitude(), spot.getImage());
+        for (Secteur secteur: spot.getSecteurs()) {
+                SecteurEditForm formSecteur = secteurService.mapSecteur(secteur);
+                for (Voie voie: secteur.getVoies()) {
+                        VoieEditForm formVoie = voieService.mapVoie(voie);
+                        for (Longueur longueur : voie.getLongueurs()) {
+                                formVoie.addLongueur(longueurService.mapLongueur(longueur));
+                        }
+                        formSecteur.addvoie(formVoie);
+                }
+                spotEditForm.addSecteur(formSecteur);
+        }
+        return spotEditForm;
+    }
+
+    @Override
+    public void addNewSecteurToSpot(SpotEditForm spotEditForm) {
+        spotEditForm.addSecteur(secteurService.getNewSecteur());
+    }
+
+    @Override
+    public SpotEditForm addNewVoieToSpot(SpotEditForm spotEditForm, String addVoie) {
+        spotEditForm.getSecteurs().get(Integer.parseInt(addVoie)).addvoie(voieService.getNewVoie());
+        return spotEditForm;
+    }
+
+    @Override
+    public SpotEditForm addNewLongueurToSpot(SpotEditForm spotEditForm, String addLongueur) {
+        String[] indexes = addLongueur.split("_");
+        spotEditForm.getSecteurs().get(Integer.parseInt(indexes[0])).getVoies().get(Integer.parseInt(indexes[1])).addLongueur(new LongueurFormRegistration());
+        return spotEditForm;
+    }
+
+    @Override
+    public SpotEditForm removeSecteurToSpot(SpotEditForm spotEditForm, String removeSecteur) {
+        spotEditForm.getSecteurs().remove(Integer.parseInt(removeSecteur));
+        return spotEditForm;
+    }
+
+    @Override
+    public SpotEditForm removeVoieToSpot(SpotEditForm spotEditForm, String removeVoie) {
+        String[] indexes = removeVoie.split("_");
+        spotEditForm.getSecteurs().get(Integer.parseInt(indexes[0])).getVoies().remove(Integer.parseInt(indexes[1]));
+        return spotEditForm;
+    }
+
+    @Override
+    public SpotEditForm removeLongueurToSpot(SpotEditForm spotEditForm, String removeLongueur) {
+        String[] indexes = removeLongueur.split("_");
+        spotEditForm.getSecteurs().get(Integer.parseInt(indexes[0])).getVoies().get(Integer.parseInt(indexes[1])).getLongueurs().remove(Integer.parseInt(indexes[2]));
+        return spotEditForm;
+    }
+
+    @Override
+    public Spot updateSpot(Integer spotId, SpotEditForm spotEditForm) {
+        Spot updateSpot = new Spot(spotEditForm.getSpotNom(), regionRepository.findByRegionLibelle(spotEditForm.getRegion()), spotEditForm.getSpotDescription(), spotEditForm.getAcces(), spotEditForm.getOrientation(), spotEditForm.getLongitude(), spotEditForm.getLatitude(), spotEditForm.getImage());
+        updateSpot.setSpotId(spotId);
+        for (SecteurEditForm secteurEditForm: spotEditForm.getSecteurs()) {
+            Secteur secteur = secteurService.updateSecteur(secteurEditForm);
+            for (VoieEditForm voieEditForm: secteurEditForm.getVoies()) {
+                Voie voie = voieService.updateVoie(voieEditForm);
+                for (LongueurFormRegistration longueurFormRegistration: voieEditForm.getLongueurs()) {
+                    voie.addLongueur(longueurService.updateLongueur(longueurFormRegistration));
+                }
+                secteur.addVoie(voie);
+            }
+            updateSpot.addSecteur(secteur);
+        }
+        return spotRepository.save(updateSpot);
     }
 
 }

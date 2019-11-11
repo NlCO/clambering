@@ -27,11 +27,14 @@ public class SpotController {
         this.spotService = spotService;
     }
 
+    @ModelAttribute
+    public void addFormData(Model model) {
+        model.addAttribute("formData", spotService.getSpotFormInfo());
+    }
+
     @GetMapping("/spots")
     public String spotsListe(Model model, @ModelAttribute("spotFormCriterias") SpotFormCriterias spotFormCriterias) {
         model.addAttribute("spots", spotService.filterSpots(spotFormCriterias));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
-
         LOGGER.debug("affichage de la liste des spots");
         return "spots";
     }
@@ -39,39 +42,31 @@ public class SpotController {
     @GetMapping("/spots/{spotId}")
     public String spotInfo(Model model, @PathVariable Integer spotId) {
         model.addAttribute("spot", spotService.spotInfo(spotId));
-
         LOGGER.debug("affichage de la les infos du spots");
         return "spot";
     }
 
     @GetMapping("/spotRegistration")
     public String spotRegistration(Model model) {
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotRegistrationForm", spotService.getEmptySpot());
-
         LOGGER.debug("affichage de la page de création de spot");
         return "spotRegistration";
     }
 
     @PostMapping("/spotRegistration")
     public String spotRegistration(Model model, @ModelAttribute("spotRegistrationForm") SpotFormRegistration newSpot) {
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         Spot saveSpot = spotService.ajouterSpot(newSpot);
-
         if (saveSpot != null) {
             return "redirect:/spots/" + saveSpot.getSpotId();
         }
-
         LOGGER.debug("affichage du nouveau post");
         return "spotRegistration";
     }
 
     @GetMapping("/spots/{spotId}/spotEdition")
     public String spotEdition(Model model, @PathVariable Integer spotId) {
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         model.addAttribute("spotEditForm", spotService.getSpotEditForm(spotService.spotInfo(spotId)));
-
         LOGGER.debug("affichage de la page de création de spot");
         return "spotEdition";
     }
@@ -85,7 +80,6 @@ public class SpotController {
     @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"addSecteur"})
     public String addSecteur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId){
         spotService.addNewSecteurToSpot(spotEditForm);
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         return "spotEdition";
     }
@@ -93,7 +87,6 @@ public class SpotController {
     @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"addVoie"})
     public String addVoie (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
         spotService.addNewVoieToSpot(spotEditForm, req.getParameter("addVoie"));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         return "spotEdition";
     }
@@ -101,7 +94,6 @@ public class SpotController {
     @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"addLongueur"})
     public String addLongueur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
         spotService.addNewLongueurToSpot(spotEditForm, req.getParameter("addLongueur"));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         return "spotEdition";
     }
@@ -109,7 +101,6 @@ public class SpotController {
     @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"removeSecteur"})
     public String removeSecteur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
         spotService.removeSecteurToSpot(spotEditForm, req.getParameter("removeSecteur"));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         return "spotEdition";
     }
@@ -117,7 +108,6 @@ public class SpotController {
     @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"removeVoie"})
     public String removeVoie (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
         spotService.removeVoieToSpot(spotEditForm, req.getParameter("removeVoie"));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         return "spotEdition";
     }
@@ -125,7 +115,6 @@ public class SpotController {
     @RequestMapping(value = "/spots/{spotId}/spotEdition", params = {"removeLongueur"})
     public String removeLongueur (final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req){
         spotService.removeLongueurToSpot(spotEditForm, req.getParameter("removeLongueur"));
-        model.addAttribute("formData", spotService.getSpotFormInfo());
         model.addAttribute("spotEdit", spotId);
         return "spotEdition";
     }

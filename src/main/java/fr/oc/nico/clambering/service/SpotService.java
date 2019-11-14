@@ -37,5 +37,5 @@ public interface SpotService {
 
     SpotEditForm removeLongueurToSpot(SpotEditForm spotEditForm, String removeLongueur);
 
-    Spot updateSpot(Integer spotId, SpotEditForm spotEditForm);
+    Spot updateSpot(SpotEditForm spotEditForm);
 }

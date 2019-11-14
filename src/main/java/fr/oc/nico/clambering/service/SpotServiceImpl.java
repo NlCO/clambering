@@ -70,7 +70,7 @@ public class SpotServiceImpl implements SpotService {
         tmpVoie.addLongueur(tmpLongueur);
         Secteur tmpSecteur = new Secteur(newSpot.getSecteurNom(), newSpot.getSecteurDescription());
         tmpSecteur.addVoie(tmpVoie);
-        Spot addSpot = new Spot(newSpot.getSpotNom(), regionRepository.findByRegionLibelle(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude(), "logo.png");
+        Spot addSpot = new Spot(null, newSpot.getSpotNom(), regionRepository.findByRegionLibelle(newSpot.getRegion()), newSpot.getSpotDescription(), newSpot.getAcces(), newSpot.getOrientation(), newSpot.getLongitude(), newSpot.getLatitude(), "logo.png");
         addSpot.addSecteur(tmpSecteur);
         return spotRepository.save(addSpot);
     }
@@ -82,7 +82,7 @@ public class SpotServiceImpl implements SpotService {
 
     @Override
     public SpotEditForm getSpotEditForm(Spot spot) {
-        SpotEditForm spotEditForm = new SpotEditForm(spot.getRegion().getRegionLibelle(),spot.getSpotLibelle(), spot.getSpotDescription(), spot.getAcces(), spot.getOrientation(), spot.getLatitude(), spot.getLongitude(), spot.getImage());
+        SpotEditForm spotEditForm = new SpotEditForm(spot.getSpotId(),spot.getRegion().getRegionLibelle(),spot.getSpotLibelle(), spot.getSpotDescription(), spot.getAcces(), spot.getOrientation(), spot.getLatitude(), spot.getLongitude(), spot.getImage());
         for (Secteur secteur: spot.getSecteurs()) {
                 SecteurEditForm formSecteur = secteurService.mapSecteur(secteur);
                 for (Voie voie: secteur.getVoies()) {
@@ -136,9 +136,9 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public Spot updateSpot(Integer spotId, SpotEditForm spotEditForm) {
-        Spot updateSpot = new Spot(spotEditForm.getSpotNom(), regionRepository.findByRegionLibelle(spotEditForm.getRegion()), spotEditForm.getSpotDescription(), spotEditForm.getAcces(), spotEditForm.getOrientation(), spotEditForm.getLongitude(), spotEditForm.getLatitude(), spotEditForm.getImage());
-        updateSpot.setSpotId(spotId);
+    public Spot updateSpot(SpotEditForm spotEditForm) {
+        Spot updateSpot = new Spot(spotEditForm.getSpotId(), spotEditForm.getSpotNom(), regionRepository.findByRegionLibelle(spotEditForm.getRegion()), spotEditForm.getSpotDescription(), spotEditForm.getAcces(), spotEditForm.getOrientation(), spotEditForm.getLongitude(), spotEditForm.getLatitude(), spotEditForm.getImage());
+        //updateSpot.setSpotId(spotId);
         for (SecteurEditForm secteurEditForm: spotEditForm.getSecteurs()) {
             Secteur secteur = secteurService.updateSecteur(secteurEditForm);
             for (VoieEditForm voieEditForm: secteurEditForm.getVoies()) {

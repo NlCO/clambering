@@ -73,7 +73,7 @@ public class SpotController {
 
     @PostMapping("/spots/{spotId}/spotEdition")
     public String spotEdition(Model model, @PathVariable Integer spotId, final SpotEditForm spotEditForm) {
-        spotService.updateSpot(spotId, spotEditForm);
+        spotService.updateSpot(spotEditForm);
         return "redirect:/spots/{spotId}";
     }
 

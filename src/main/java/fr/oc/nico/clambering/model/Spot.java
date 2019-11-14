@@ -50,7 +50,8 @@ public class Spot implements Serializable {
     @Transient
     private Integer hauteurMax;
 
-    public Spot(String spotLibelle, Region region, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image) {
+    public Spot(Integer spotId, String spotLibelle, Region region, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image) {
+        this.spotId = spotId;
         this.spotLibelle = spotLibelle;
         this.spotDescription = spotDescription;
         this.acces = acces;

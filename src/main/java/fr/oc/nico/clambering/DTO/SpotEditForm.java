@@ -10,6 +10,8 @@ import java.util.List;
 @Setter
 public class SpotEditForm {
 
+    private Integer spotId;
+
     private String region = "";
 
     private String spotNom = "";
@@ -35,7 +37,8 @@ public class SpotEditForm {
     public SpotEditForm() {
     }
 
-    public SpotEditForm(String region, String spotNom, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image ) {
+    public SpotEditForm(Integer spotId, String region, String spotNom, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image ) {
+        this.spotId = spotId;
         this.region = region;
         this.spotNom = spotNom;
         this.spotDescription = spotDescription;

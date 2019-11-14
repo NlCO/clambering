@@ -108,7 +108,7 @@ public class F4Stepdefs {
 
     @And("la modification est soumise")
     public void laModificationEstSoumise() {
-        updateSpot = spotService.updateSpot(spot.getSpotId(), spotEditForm);
+        updateSpot = spotService.updateSpot(spotEditForm);
 
     }
 

@@ -15,11 +15,7 @@ public class VoieEditForm {
 
     private String voieNom;
 
-    private List<LongueurFormRegistration> longueurs = new ArrayList<>();
-
-    public void addLongueur(LongueurFormRegistration longueur) {
-        this.longueurs.add(longueur);
-    }
+    private List<LongueurEditForm> longueurs = new ArrayList<>();
 
     public VoieEditForm() {
     }
@@ -27,5 +23,9 @@ public class VoieEditForm {
     public VoieEditForm(Integer voieId, String voieNom) {
         this.voieId = voieId;
         this.voieNom = voieNom;
+    }
+
+    public void addLongueur(LongueurEditForm longueur) {
+        this.longueurs.add(longueur);
     }
 }

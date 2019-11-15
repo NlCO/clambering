@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class LongueurFormRegistration {
+public class LongueurEditForm {
 
     private Integer longueurId;
 
@@ -21,10 +21,10 @@ public class LongueurFormRegistration {
 
     private Integer degaine;
 
-    public LongueurFormRegistration() {
+    public LongueurEditForm() {
     }
 
-    public LongueurFormRegistration(Integer longueurId, String longueurNom, Integer hauteur, String cotation, Integer degaine, Integer idRelaiDebut, Integer idRelaiFin) {
+    public LongueurEditForm(Integer longueurId, String longueurNom, Integer hauteur, String cotation, Integer degaine, Integer idRelaiDebut, Integer idRelaiFin) {
         this.longueurId = longueurId;
         this.longueurNom = longueurNom;
         this.hauteur = hauteur;

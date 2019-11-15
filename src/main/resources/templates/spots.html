@@ -10,7 +10,7 @@
     <div class="container-fluid mt-2 w-75">
         <div class="card">
         <div class="card-header align-items-center d-flex justify-content-between">
-            <a class="btn btn-dark" role="button" th:href="@{/spotRegistration}">Ajouter un spot</a>
+            <a class="btn btn-dark" role="button" th:href="@{'/spots/0/spotEdition'}">Ajouter un spot</a>
             <a class="card-link h3" data-toggle="collapse" href="#collapseFilterForm"><span class="badge badge-primary">Filtre  : <span class="badge badge-pill badge-light" th:utext="${spots.size()}"></span></span>  <i class="fas fa-chevron-down"></i></a>
         </div>
         <div class="card-body collapse" id="collapseFilterForm">

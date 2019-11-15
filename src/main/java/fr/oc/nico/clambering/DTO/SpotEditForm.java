@@ -22,7 +22,7 @@ public class SpotEditForm {
 
     private String orientation = "";
 
-    private String image;
+    private String image = "logo.png";
 
     private Float longitude;
 
@@ -30,14 +30,10 @@ public class SpotEditForm {
 
     private List<SecteurEditForm> secteurs = new ArrayList<>();
 
-    public void addSecteur(SecteurEditForm secteur) {
-        this.secteurs.add(secteur);
-    }
-
     public SpotEditForm() {
     }
 
-    public SpotEditForm(Integer spotId, String region, String spotNom, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image ) {
+    public SpotEditForm(Integer spotId, String region, String spotNom, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image) {
         this.spotId = spotId;
         this.region = region;
         this.spotNom = spotNom;
@@ -47,5 +43,9 @@ public class SpotEditForm {
         this.longitude = longitude;
         this.latitude = latitude;
         this.image = image;
+    }
+
+    public void addSecteur(SecteurEditForm secteur) {
+        this.secteurs.add(secteur);
     }
 }

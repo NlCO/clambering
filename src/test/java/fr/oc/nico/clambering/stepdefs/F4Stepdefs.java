@@ -4,9 +4,8 @@ import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import fr.oc.nico.clambering.DTO.LongueurFormRegistration;
+import fr.oc.nico.clambering.DTO.LongueurEditForm;
 import fr.oc.nico.clambering.DTO.SpotEditForm;
-import fr.oc.nico.clambering.DTO.SpotFormRegistration;
 import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.repository.SpotRepository;
 import fr.oc.nico.clambering.service.SpotService;
@@ -17,48 +16,49 @@ public class F4Stepdefs {
     private final SpotService spotService;
     private final SpotRepository spotRepository;
 
-    private SpotFormRegistration spot1;
-
-    private Spot saveSpot;
-
-    private Spot spot;
     private SpotEditForm spotEditForm;
+    private Spot saveSpot;
+    private Spot spot;
     private Spot updateSpot;
 
     public F4Stepdefs(SpotService spotService, SpotRepository spotRepository) {
         this.spotService = spotService;
         this.spotRepository = spotRepository;
-        this.spot1 = new SpotFormRegistration();
     }
 
-    @Given("un spot inexistant (.*) de (.*)$")
-    public void unSpotInexistantFEATURESPOT(String spotName, String region) {
+    @Given("un spot inexistant (.*)$")
+    public void unSpotInexistantFEATURESPOT(String spotName) {
         Assert.assertFalse("Le spot " + spotName + "n'existe pas", spotRepository.findBySpotLibelle(spotName).isPresent());
-        spot1.setSpotNom(spotName);
-        spot1.setRegion(region);
+    }
+
+    @When("je rempli le formulaire avec son nom (.*) et sa region (.*)$")
+    public void jeRempliLeFormulaireAvecSonNomEtSaRegion(String spotName, String region) {
+        spotEditForm = spotService.getSpotEditForm();
+        spotEditForm.setSpotNom(spotName);
+        spotEditForm.setRegion(region);
     }
 
     @And("contenant un secteur (.*)$")
     public void contenantUnSecteurFEATURESECTEUR(String secteurName) {
-        spot1.setSecteurNom(secteurName);
+        spotEditForm.getSecteurs().get(0).setSecteurNom(secteurName);
     }
 
     @And("contenant une voie (.*)$")
     public void contenantUneVoieFEATUREVOIE(String voieName) {
-        spot1.setVoieNom(voieName);
+        spotEditForm.getSecteurs().get(0).getVoies().get(0).setVoieNom(voieName);
     }
 
     @And("contenant une longueur (.*), de longueur (.*), de cotation (.*) avec (.*) degaines")
-    public void contenantUneLongueurFEATURELONGUEURDeLongueurFDeCotationAAvecDegaine(String longueurName, int hauteur, String cotation, int degaine) {
-        spot1.setLongueurNom(longueurName);
-        spot1.setHauteur(hauteur);
-        spot1.setCotation(cotation);
-        spot1.setDegaine(degaine);
+    public void contenantUneLongueurFEATURELONGUEURDeLongueurFDeCotationAAvecDegaine(String longueurName, int hauteur, String cotation, int degaines) {
+        spotEditForm.getSecteurs().get(0).getVoies().get(0).getLongueurs().get(0).setLongueurNom(longueurName);
+        spotEditForm.getSecteurs().get(0).getVoies().get(0).getLongueurs().get(0).setHauteur(hauteur);
+        spotEditForm.getSecteurs().get(0).getVoies().get(0).getLongueurs().get(0).setCotation(cotation);
+        spotEditForm.getSecteurs().get(0).getVoies().get(0).getLongueurs().get(0).setDegaine(degaines);
     }
 
-    @When("le formulaire est rempli et envoyé")
+    @And("le formulaire est rempli et envoyé")
     public void leFormulaireEstRempliEtEnvoye() {
-        saveSpot = spotService.ajouterSpot(spot1);
+        saveSpot = spotService.updateSpot(spotEditForm);
     }
 
     @Then("le spot (.*) est présent dans la base")
@@ -68,7 +68,7 @@ public class F4Stepdefs {
 
     @And("il contient (.*) secteur nommé (.*)$")
     public void ilContientSecteurNommeFEATURESECTEUR(int nbSecteur, String secteurName) {
-        saveSpot = spotRepository.findBySpotLibelle(spot1.getSpotNom()).orElseThrow(null) ;
+        saveSpot = spotRepository.findBySpotLibelle(spotEditForm.getSpotNom()).orElseThrow(null) ;
         Assert.assertEquals(nbSecteur, saveSpot.getSecteurs().size());
         Assert.assertEquals(secteurName, saveSpot.getSecteurs().get(0).getSecteurLibelle());
     }
@@ -98,7 +98,7 @@ public class F4Stepdefs {
 
     @And("une longueur (.*), de longueur (.*), de cotation (.*) avec (.*) degaines est ajoutée")
     public void uneLongueurFEATURELONGUEURDeLongueurDeCotationAAvecDegainesEstAjoutee(String newLongueurName, int hauteur, String cotation, int degaines) {
-        LongueurFormRegistration newLongueur = new LongueurFormRegistration();
+        LongueurEditForm newLongueur = new LongueurEditForm();
         newLongueur.setLongueurNom(newLongueurName);
         newLongueur.setHauteur(hauteur);
         newLongueur.setCotation(cotation);
@@ -141,4 +141,6 @@ public class F4Stepdefs {
     public void saCotationMinEstDeA(String coteMin) {
         Assert.assertEquals(coteMin, updateSpot.getCotationMin());
     }
+
+
 }

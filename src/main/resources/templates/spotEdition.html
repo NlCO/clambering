@@ -10,7 +10,7 @@
 <body>
 
 <main layout:fragment="content" class="container mt-3">
-    <form method="post" th:object="${spotEditForm}" th:action="@{'/spots/'+ ${spotEdit} +'/spotEdition/'}">
+    <form method="post" th:object="${spotEditForm}" th:action="@{'/spots/'+ ${spotEditForm.spotId ?: '0'} +'/spotEdition/'}">
         <div class="card rounded">
             <div class="card-header">
                 <h5>Information du spot</h5>
@@ -50,11 +50,11 @@
                 <div class="row form-inline justify-content-start my-3">
                     <div class="form-group">
                         <label for="longitude" class="h5 mr-1">Longitude :</label>
-                        <input id="longitude" th:field="*{longitude}" required>
+                        <input id="longitude" type="number" min="-180" max="180" step="any" placeholder="0.000000" th:field="*{longitude}" required>
                     </div>
                     <div class="form-group mx-3">
-                        <label for="latitude" class="h5 mr-1">latitude :</label>
-                        <input id="latitude" th:field="*{latitude}" required>
+                        <label for="latitude" class="h5 mr-1">Latitude :</label>
+                        <input id="latitude" type="number" min="-90" max="90" step="any" placeholder="0.000000" th:field="*{latitude}" required>
                     </div>
                 </div>
                 <input type="hidden" th:field="*{image}">
@@ -110,7 +110,7 @@
                                                 <input th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].longueurNom}" required/>
                                             </td>
                                             <td>
-                                                <input class="text-right" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].hauteur}" type="number" required/> m
+                                                <input class="text-right" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].hauteur}" type="number" min="1" required/> m
                                             </td>
                                             <td>
                                                 <select th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].cotation}" required>
@@ -118,7 +118,7 @@
                                                 </select>
                                             </td>
                                             <td>
-                                                <input class="text-right" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].degaine}" type="number" required/>
+                                                <input class="text-right" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].degaine}" type="number" min="0" placeholder="0" required/>
                                             </td>
                                             <td>
                                                 <input type="hidden" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].longueurId}">

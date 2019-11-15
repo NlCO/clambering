@@ -1,6 +1,6 @@
 package fr.oc.nico.clambering.service;
 
-import fr.oc.nico.clambering.DTO.LongueurFormRegistration;
+import fr.oc.nico.clambering.DTO.LongueurEditForm;
 import fr.oc.nico.clambering.DTO.VoieEditForm;
 import fr.oc.nico.clambering.model.Voie;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ public class VoieServiceImpl implements VoieService {
     @Override
     public VoieEditForm getNewVoie() {
         VoieEditForm voieEditForm = new VoieEditForm();
-        voieEditForm.addLongueur(new LongueurFormRegistration());
+        voieEditForm.addLongueur(new LongueurEditForm());
         return voieEditForm;
     }
 

@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,31 +19,45 @@ public class Secteur implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer secteurId;
 
-    private String nom;
+    private String secteurLibelle;
 
     @Column(columnDefinition = "text")
-    private String description;
+    private String secteurDescription;
 
     @ManyToOne
-    @JoinColumn
     private Spot spot;
 
-    @OneToMany(mappedBy = "secteur")
-    private List<Voie> voies;
-
+    @OneToMany(mappedBy = "secteur", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Voie> voies = new ArrayList<>();
     @Transient
     private String cotationMin;
-
     @Transient
     private String cotationMax;
-
     @Transient
-    private Float hauteurMin;
-
+    private Integer hauteurMin;
     @Transient
-    private Float hauteurMax;
+    private Integer hauteurMax;
 
-    public String getCotationMax() {
+    public Secteur(String secteurLibelle, String secteurDescription) {
+        this.secteurLibelle = secteurLibelle;
+        this.secteurDescription = secteurDescription;
+    }
+
+    public Secteur(Integer secteurId, String secteurLibelle, String secteurDescription) {
+        this.secteurId = secteurId;
+        this.secteurLibelle = secteurLibelle;
+        this.secteurDescription = secteurDescription;
+    }
+
+    public Secteur() {
+    }
+
+    public void addVoie(Voie voie) {
+        this.voies.add(voie);
+        voie.setSecteur(this);
+    }
+
+    String getCotationMax() {
         return voies.stream().max(Comparator.comparing(Voie::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
     }
 
@@ -50,7 +65,7 @@ public class Secteur implements Serializable {
         this.cotationMax = getCotationMax();
     }
 
-    public String getCotationMin() {
+    String getCotationMin() {
         return voies.stream().min(Comparator.comparing(Voie::getCotationMin)).orElseThrow(NoSuchElementException::new).getCotationMin();
     }
 
@@ -58,7 +73,7 @@ public class Secteur implements Serializable {
         this.cotationMin = getCotationMin();
     }
 
-    public Float getHauteurMin() {
+    Integer getHauteurMin() {
         return voies.stream().min(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 
@@ -66,7 +81,7 @@ public class Secteur implements Serializable {
         this.hauteurMin = getHauteurMin();
     }
 
-    public Float getHauteurMax() {
+    Integer getHauteurMax() {
         return voies.stream().max(Comparator.comparing(Voie::getHauteur)).orElseThrow(NoSuchElementException::new).getHauteur();
     }
 

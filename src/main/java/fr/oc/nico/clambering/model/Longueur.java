@@ -15,12 +15,11 @@ public class Longueur {
     private Integer longueurId;
 
     @ManyToOne
-    @JoinColumn
     private Voie voie;
 
-    private String nom;
+    private String longueurLibelle;
 
-    private Float hauteur;
+    private Integer hauteur;
 
     private String cotation;
 
@@ -30,4 +29,21 @@ public class Longueur {
 
     private Integer degaine;
 
+    public Longueur() {
+    }
+
+    public Longueur(String longueurLibelle, Integer hauteur, String cotation, Integer degaine) {
+        this.longueurLibelle = longueurLibelle;
+        this.hauteur = hauteur;
+        this.cotation = cotation;
+        this.degaine = degaine;
+    }
+
+    public Longueur(Integer longueurId,  String longueurLibelle, Integer hauteur, String cotation, Integer degaine) {
+        this.longueurId = longueurId;
+        this.longueurLibelle = longueurLibelle;
+        this.hauteur = hauteur;
+        this.cotation = cotation;
+        this.degaine = degaine;
+    }
 }

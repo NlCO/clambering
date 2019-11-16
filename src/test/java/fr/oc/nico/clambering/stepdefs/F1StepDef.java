@@ -36,13 +36,13 @@ public class F1StepDef extends CucumberTest {
         Assert.assertEquals(cotation,spot.getCotationMin());
     }
 
-    @Then("Sa hauteur max est {float}")
-    public void saHauteurMaxEstHauteur(Float hauteur) {
-        Assert.assertEquals(hauteur,spot.getHauteurMax());
+    @Then("Sa hauteur max est (\\d+)$")
+    public void saHauteurMaxEstHauteur(int hauteur) {
+        Assert.assertEquals(hauteur,spot.getHauteurMax(),0);
     }
 
-    @Then("Sa hauteur min est {float}")
-    public void saHauteurMinEstHauteur(Float hauteur) {
-        Assert.assertEquals(hauteur,spot.getHauteurMin());
+    @Then("Sa hauteur min est (\\d+)$")
+    public void saHauteurMinEstHauteur(int hauteur) {
+        Assert.assertEquals(hauteur,spot.getHauteurMin(),0);
     }
 }

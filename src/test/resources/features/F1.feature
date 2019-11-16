@@ -34,10 +34,10 @@ Feature: F1 - Affiche les inforations des spots
 
       Examples:
         |id|hauteur|
-        |2 |52.83  |
-        |4 |20.18  |
-        |12|36.65  |
-        |20|21.29  |
+        |2 |51     |
+        |4 |20     |
+        |12|36     |
+        |20|21     |
 
     Scenario Outline: Hauteur Min d'un spot
       When Je consulte les informations du spot ayant l'<id>
@@ -45,7 +45,7 @@ Feature: F1 - Affiche les inforations des spots
 
       Examples:
         |id|hauteur|
-        |2 |19.39  |
-        |4 |20.18  |
-        |12|18.27  |
-        |20|16.66  |
+        |2 |19     |
+        |4 |20     |
+        |12|18     |
+        |20|16     |

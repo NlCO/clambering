@@ -10,11 +10,15 @@
 <body>
 
 <main layout:fragment="content" class="container ">
-
+    <div th:if="${#authorization.expression('isAuthenticated()')}" class="mt-1 d-flex flex-row-reverse">
+        <form method="get" th:action="@{'/spots/' + ${spot.spotId} + '/spotEdition'}">
+            <button class="btn btn-dark" type="submit">Editer ce spot</button>
+        </form>
+    </div>
     <div class="jumbotron m-2">
-        <h5 class="text-center"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.code} + ' pr-5'"></span><span th:utext="${spot.region.pays.nom}"></span> - <span th:utext="${spot.region.nom}"></span> </h5>
-        <h1 th:utext=" ${spot.nom}" class="text text-center"></h1>
-        <p th:text="${spot.description}" class="text text-center text-justify">...</p>
+        <h5 class="text-center"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.codePays} + ' pr-5'"></span><span th:utext="${spot.region.pays.paysLibelle}"></span> - <span th:utext="${spot.region.regionLibelle}"></span> </h5>
+        <h1 th:utext=" ${spot.spotLibelle}" class="text text-center"></h1>
+        <p th:text="${spot.spotDescription}" class="text text-center text-justify">...</p>
     </div>
 
     <div class="row m-2">
@@ -60,12 +64,12 @@
                     <div th:each ="secteur : ${spot.secteurs}" class="card">
                         <div class="card-header">
                             <a class="card-link" data-toggle="collapse" th:attr="href='#collapseSecteurId_'+${secteur.secteurId}">
-                                <span th:utext="${secteur.nom}">...</span>
+                                <span th:utext="${secteur.secteurLibelle}">...</span>
                             </a>
                         </div>
                         <div th:attr="id='collapseSecteurId_'+${secteur.secteurId}" class="collapse" data-parent="#accordion">
                             <div class="card-body">
-                                <p><b>Informations : </b><span th:utext="${secteur.description}"></span></p>
+                                <p><b>Informations : </b><span th:utext="${secteur.secteurDescription}"></span></p>
                                 <div class="table-responsive">
                                     <table class="table table-borderless text-center">
                                         <thead>
@@ -78,9 +82,9 @@
                                         </thead>
                                         <tbody>
                                         <tr th:each="voie : ${secteur.voies}">
-                                            <td class="text-left" th:utext="${voie.nom}"></td>
+                                            <td class="text-left" th:utext="${voie.voieLibelle}"></td>
                                             <td th:utext="${voie.longueurs.size()}"></td>
-                                            <td><span th:utext="${#numbers.formatDecimal(#aggregates.sum(voie.longueurs.![hauteur]),1,2,'COMMA')}"></span> m</td>
+                                            <td><span th:utext="${#aggregates.sum(voie.longueurs.![hauteur])}"></span> m</td>
                                             <td th:utext="${#aggregates.sum(voie.longueurs.![degaine])}"></td>
                                             <td th:utext="${voie.cotationMin}"></td>
                                             <td th:utext="${voie.cotationMax}"></td>

@@ -16,10 +16,11 @@ public class Pays {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer paysId;
 
-    private String nom;
+    private String paysLibelle;
 
-    private String code;
+    private String codePays;
 
     @OneToMany(mappedBy = "pays")
     private List<Region> regions;
 }
+

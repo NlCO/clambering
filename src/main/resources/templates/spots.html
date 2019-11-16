@@ -9,25 +9,25 @@
 <main layout:fragment="content">
     <div class="container-fluid mt-2 w-75">
         <div class="card">
-        <div class="card-header d-flex justify-content-between">
-            <h4>Spots : <span th:text="${spots.size()}"></span></h4>
-            <a class="card-link" data-toggle="collapse" href="#collapseFilterForm">Filtre  <i class="fas fa-chevron-down"></i></a>
+        <div class="card-header align-items-center d-flex justify-content-between">
+            <a class="btn btn-dark" role="button" th:href="@{'/spots/0/spotEdition'}">Ajouter un spot</a>
+            <a class="card-link h3" data-toggle="collapse" href="#collapseFilterForm"><span class="badge badge-primary">Filtre  : <span class="badge badge-pill badge-light" th:utext="${spots.size()}"></span></span>  <i class="fas fa-chevron-down"></i></a>
         </div>
         <div class="card-body collapse" id="collapseFilterForm">
-        <form th:action="@{/spots}" th:object="${spotFormCriterias}" method="post">
+        <form th:action="@{/spots}" th:object="${spotFormCriterias}" method="get">
             <div class="row justify-content-around">
                 <div class="m-2 d-flex align-items-start flex-column">
                     <h5>Pays : </h5>
                     <select name="pays" class="custom-select m-auto" th:field="${spotFormCriterias.pays}">
                         <option value="">Tous</option>
-                        <option th:each="p : ${formData.getPays()}" th:value="${p.getNom()}" th:utext="${p.getNom()}"></option>
+                        <option th:each="p : ${formData.getPays()}" th:value="${p.getPaysLibelle()}" th:utext="${p.getPaysLibelle()}"></option>
                     </select>
                 </div>
                 <div class="m-2 d-flex align-items-start flex-column">
                     <h5>Région :</h5>
                     <select name="region" class="custom-select m-auto" th:field="${spotFormCriterias.region}">
                         <option value="">Toutes</option>
-                        <option th:each="r : ${formData.getRegions()}" th:value="${r.getNom()}" th:utext="${r.getNom()}"></option>
+                        <option th:each="r : ${formData.getRegions()}" th:value="${r.regionLibelle}" th:utext="${r.regionLibelle}"></option>
                     </select>
                 </div>
                 <div class="m-2 d-flex align-items-start flex-column">
@@ -72,8 +72,7 @@
             <div th:each ="spot : ${spots}" class="card m-4 rounded" style="min-width:250px; max-width:250px">
                 <img class="card-img-top" th:src="'/img/' + ${spot.image}" th:alt="${spot.image}" style="height:200px">
                 <div class="card-body">
-                    <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.nom}">...</h4></a>
-                    <p class="card-text">Secteur : <span th:utext="${spot.secteurs.size()}"></span></p>
+                    <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.spotLibelle}">...</h4></a>
                 </div>
             </div>
         </div>

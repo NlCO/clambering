@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,10 +19,10 @@ public class Spot implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer spotId;
 
-    private String nom;
+    private String spotLibelle;
 
     @Column(columnDefinition = "text")
-    private String description;
+    private String spotDescription;
 
     @Column(columnDefinition = "text")
     private String acces;
@@ -34,26 +35,41 @@ public class Spot implements Serializable {
 
     private Float latitude;
 
-    private boolean tagAmiEscalade;
+    private boolean tagAmiEscalade = false;
 
-    @OneToMany(mappedBy = "spot")
-    private List<Secteur> secteurs;
-
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Secteur> secteurs = new ArrayList<>();
     @ManyToOne
-    @JoinColumn
     private Region region;
-
     @Transient
     private String cotationMin;
-
     @Transient
     private String cotationMax;
-
     @Transient
-    private Float hauteurMin;
-
+    private Integer hauteurMin;
     @Transient
-    private Float hauteurMax;
+    private Integer hauteurMax;
+
+    public Spot(Integer spotId, String spotLibelle, Region region, String spotDescription, String acces, String orientation, Float longitude, Float latitude, String image) {
+        this.spotId = spotId;
+        this.spotLibelle = spotLibelle;
+        this.spotDescription = spotDescription;
+        this.acces = acces;
+        this.orientation = orientation;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.region = region;
+        this.image = image;
+    }
+
+    public Spot() {
+
+    }
+
+    public void addSecteur(Secteur secteur) {
+        this.secteurs.add(secteur);
+        secteur.setSpot(this);
+    }
 
     public String getCotationMax() {
         return secteurs.stream().max(Comparator.comparing(Secteur::getCotationMax)).orElseThrow(NoSuchElementException::new).getCotationMax();
@@ -71,7 +87,7 @@ public class Spot implements Serializable {
         this.cotationMin = getCotationMin();
     }
 
-    public Float getHauteurMin() {
+    public Integer getHauteurMin() {
         return secteurs.stream().min(Comparator.comparing(Secteur::getHauteurMin)).orElseThrow(NoSuchElementException::new).getHauteurMin();
     }
 
@@ -79,7 +95,7 @@ public class Spot implements Serializable {
         this.hauteurMin = getHauteurMin();
     }
 
-    public Float getHauteurMax() {
+    public Integer getHauteurMax() {
         return secteurs.stream().max(Comparator.comparing(Secteur::getHauteurMax)).orElseThrow(NoSuchElementException::new).getHauteurMax();
     }
 

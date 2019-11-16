@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Spot</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/leaflet/1.5.1/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="/webjars/leaflet/1.5.1/leaflet.js"></script>
+</head>
+<body>
+
+<main layout:fragment="content" class="container mt-3">
+    <form method="post" th:object="${spotEditForm}" th:action="@{'/spots/'+ ${spotEditForm.spotId ?: '0'} +'/spotEdition/'}">
+        <div class="card rounded">
+            <div class="card-header">
+                <h5>Information du spot</h5>
+            </div>
+            <div class="card-body">
+                <div class="row form-inline justify-content-around d-flex align-items-center">
+                    <div class="form-group">
+                        <label for="name" class="h5 mr-1">Nom du spot :</label>
+                        <input id="name" type="text" th:field="*{spotNom}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="region" class="h5 mr-1">Région :</label>
+                        <select id="region" class="custom-select m-auto" th:field="*{region}" required>
+                            <option value=""></option>
+                            <option th:each="r : ${formData.getRegions()}" th:value="${r.regionLibelle}" th:utext="${r.regionLibelle}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orientation" class="h5 mr-1">Orientation :</label>
+                        <select id="orientation" class="custom-select m-auto" th:field="*{orientation}" required>
+                            <option value=""></option>
+                            <option th:each="o : ${formData.getOrientations()}" th:value="${o}" th:utext="${o}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <label for="description" class="h5">Brève description :</label>
+                    <textarea class="w-100" id="description" th:field="*{spotDescription}" required></textarea>
+                </div>
+
+                <div class="row my-3">
+                    <label for="acces" class="h5">Accès au site :</label>
+                    <textarea class="w-100" id="acces" th:field="*{acces}" required></textarea>
+                </div>
+
+                <div class="row form-inline justify-content-start my-3">
+                    <div class="form-group">
+                        <label for="longitude" class="h5 mr-1">Longitude :</label>
+                        <input id="longitude" type="number" min="-180" max="180" step="any" placeholder="0.000000" th:field="*{longitude}" required>
+                    </div>
+                    <div class="form-group mx-3">
+                        <label for="latitude" class="h5 mr-1">Latitude :</label>
+                        <input id="latitude" type="number" min="-90" max="90" step="any" placeholder="0.000000" th:field="*{latitude}" required>
+                    </div>
+                </div>
+                <input type="hidden" th:field="*{image}">
+            </div>
+        </div>
+        <div class="card rounded mt-2">
+            <div class="card-header">
+                <h5>Informations détaillées</h5>
+            </div>
+            <div class="card-body">
+                <div class="card rounded mt-2" th:each="secteur, itemStatSecteur : *{secteurs}">
+                    <div class="card-header">
+                        <div class="d-flex justify-content-between">
+                            <div class="form-group">
+                                <input type="hidden" th:field="*{secteurs[__${itemStatSecteur.index}__].secteurId}">
+                                <label th:for="${'secteurNom' + itemStatSecteur.count}" class="h5 mr-3">Secteur :</label>
+                                <input th:id="${'secteurNom' + itemStatSecteur.count}" th:field="*{secteurs[__${itemStatSecteur.index}__].secteurNom}" required>
+                            </div>
+                            <div th:if="${itemStatSecteur.size > 1}">
+                                <button class="btn btn-secondary" type="submit" name="removeSecteur" th:value="${itemStatSecteur.index}">Retirer ce secteur</button>
+                            </div>
+                        </div>
+                        <div class="form-group row mt-1">
+                            <label th:for="${'secteurDescription' + itemStatSecteur.count}" class="col-12 col-xl-2 h5">Informations :</label>
+                            <textarea th:id="${'secteurDescription' + itemStatSecteur.count}" th:field="*{secteurs[__${itemStatSecteur.index}__].secteurDescription}" class="col-12 col-xl-10" rows="2" required></textarea>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card rounded" th:each="voie, itemStatVoie : *{secteurs[__${itemStatSecteur.index}__].voies}">
+                            <div class="card-header d-flex justify-content-between">
+                                <div class="form-group">
+                                    <input type="hidden" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].voieId}">
+                                    <label th:for="${'voieNom' + itemStatVoie.count}" class="h5 mr-3">Voie :</label>
+                                    <input th:id="${'voieNom' + itemStatVoie.count}"  th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].voieNom}" required>
+                                </div>
+                                <div th:if="${itemStatVoie.size > 1}">
+                                    <button class="btn btn-secondary" type="submit" name="removeVoie" th:value="${itemStatSecteur.index+'_'+itemStatVoie.index}">Retirer cette voie</button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="table-responsive">
+                                    <table class="table table-borderless text-center">
+                                        <thead>
+                                        <th class="text-justify">longueur</th>
+                                        <th>hauteur</th>
+                                        <th>cotation</th>
+                                        <th>Nombre dégaines</th>
+                                        <th></th>
+                                        </thead>
+                                        <tbody>
+                                        <tr th:each="longueur, itemStatLongueur : *{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs}">
+                                            <td class="text-justify">
+                                                <input th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].longueurNom}" required/>
+                                            </td>
+                                            <td>
+                                                <input class="text-right" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].hauteur}" type="number" min="1" required/> m
+                                            </td>
+                                            <td>
+                                                <select th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].cotation}" required>
+                                                    <option th:each="c : ${formData.getCotations()}" th:value="${c}" th:utext="${c}"></option>
+                                                </select>
+                                            </td>
+                                            <td>
+                                                <input class="text-right" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].degaine}" type="number" min="0" placeholder="0" required/>
+                                            </td>
+                                            <td>
+                                                <input type="hidden" th:field="*{secteurs[__${itemStatSecteur.index}__].voies[__${itemStatVoie.index}__].longueurs[__${itemStatLongueur.index}__].longueurId}">
+                                                <button th:if="${itemStatLongueur.size > 1}" class="btn btn-secondary btn-sm" type="submit" name="removeLongueur" th:value="${itemStatSecteur.index+'_'+itemStatVoie.index+'_'+itemStatLongueur.index}">X</button>
+                                            </td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                    <div>
+                                        <button class="btn btn-secondary" type="submit" name="addLongueur" th:value="${itemStatSecteur.index+'_'+itemStatVoie.index}">Ajouter une longueur</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <button class="btn btn-secondary" type="submit" name="addVoie" th:value="${itemStatSecteur.index}">Ajouter une voie</button>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div class="align-items-center">
+                    <button class="btn btn-secondary" type="submit" name="addSecteur">Ajouter un secteur</button>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row justify-content-center my-3">
+            <button class="btn-dark btn-lg" type="submit">Valider les Modifications</button>
+        </div>
+    </form>
+
+</main>
+
+
+</body>
+</html>

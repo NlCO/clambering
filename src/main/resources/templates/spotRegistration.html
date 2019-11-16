@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}">
+<head>
+    <title>Spot</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/leaflet/1.5.1/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="/webjars/leaflet/1.5.1/leaflet.js"></script>
+</head>
+<body>
+
+<main layout:fragment="content" class="container mt-3">
+    <form method="post" th:object="${spotRegistrationForm}" th:action="@{/spotRegistration}">
+        <div class="card rounded">
+            <div class="card-header">
+                <h5>Informations du spot</h5>
+            </div>
+            <div class="card-body">
+                <div class="row form-inline justify-content-around d-flex align-items-center">
+                    <div class="form-group">
+                        <label for="name" class="h5 mr-1">Nom du spot :</label>
+                        <input id="name" type="text" th:field="*{spotNom}" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="region" class="h5 mr-1">Région :</label>
+                        <select id="region" class="custom-select m-auto" th:field="*{region}" required>
+                            <option value=""></option>
+                            <option th:each="r : ${formData.getRegions()}" th:value="${r.regionLibelle}" th:utext="${r.regionLibelle}"></option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="orientation" class="h5 mr-1">Orientation :</label>
+                        <select id="orientation" class="custom-select m-auto" th:field="*{orientation}" required>
+                            <option value=""></option>
+                            <option th:each="o : ${formData.getOrientations()}" th:value="${o}" th:utext="${o}"></option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="row my-3">
+                    <label for="description" class="h5">Brève description :</label>
+                    <textarea class="w-100" id="description" th:field="*{spotDescription}" required></textarea>
+                </div>
+
+                <div class="row my-3">
+                    <label for="acces" class="h5">Accès au site :</label>
+                    <textarea class="w-100" id="acces" th:field="*{acces}" required></textarea>
+                </div>
+
+                <div class="row form-inline justify-content-start my-3">
+                    <div class="form-group">
+                        <label for="longitude" class="h5 mr-1">Longitude :</label>
+                        <input id="longitude" th:field="*{longitude}" required>
+                    </div>
+                    <div class="form-group mx-3">
+                        <label for="latitude" class="h5 mr-1">latitude :</label>
+                        <input id="latitude" th:field="*{latitude}" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card rounded mt-2">
+            <div class="card-header">
+                <div class="form-group">
+                    <label for="secteur_name" class="h5">Nom du secteur :</label>
+                    <input id="secteur_name" type="text" th:field="*{secteurNom}" required>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="row my-3">
+                    <label for="secteur_description" class="h5">Informations sur le secteur :</label>
+                    <textarea class="w-100" id="secteur_description" th:field="*{secteurDescription}" rows="3" required></textarea>
+                </div>
+                <div class="card rounded">
+                    <div class="card-header">
+                        <div class="form-group">
+                            <label for="voie_name" class="h5">Nom de la voie :</label>
+                            <input id="voie_name" type="text" th:field="*{voieNom}" required>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="form-group">
+                            <label for="longueur_name" class="h5">Nom de la longueur :</label>
+                            <input id="longueur_name" type="text" th:field="*{longueurNom}" required>
+                        </div>
+                        <div class="row form-inline justify-content-around">
+                            <div class="form-group">
+                                <label for="hauteur" class="h5 mr-1">Hauteur (en m) :</label>
+                                <input id="hauteur" type="number" th:field="*{hauteur}" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cotation" class="h5 mr-1">Cotation :</label>
+                                <select id="cotation" class="custom-select m-auto" th:field="*{cotation}" required>
+                                    <option value=""></option>
+                                    <option th:each="c : ${formData.getCotations()}" th:value="${c}" th:utext="${c}"></option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="degaine" class="h5 mr-1">Nombre de dégaine :</label>
+                                <input id="degaine" type="number" th:field="*{degaine}" required>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row justify-content-center my-3">
+            <button class="btn-dark btn-lg" type="submit">Ajouter</button>
+        </div>
+    </form>
+</main>
+
+
+</body>
+</html>

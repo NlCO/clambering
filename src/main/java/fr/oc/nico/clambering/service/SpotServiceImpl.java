@@ -2,10 +2,7 @@ package fr.oc.nico.clambering.service;
 
 
 import fr.oc.nico.clambering.DTO.*;
-import fr.oc.nico.clambering.model.Longueur;
-import fr.oc.nico.clambering.model.Secteur;
-import fr.oc.nico.clambering.model.Spot;
-import fr.oc.nico.clambering.model.Voie;
+import fr.oc.nico.clambering.model.*;
 import fr.oc.nico.clambering.repository.PaysRepository;
 import fr.oc.nico.clambering.repository.RegionRepository;
 import fr.oc.nico.clambering.repository.SpotRepository;
@@ -31,14 +28,17 @@ public class SpotServiceImpl implements SpotService {
 
     private final SecteurService secteurService;
 
+    private final CommentaireService commentaireService;
+
     @Autowired
-    public SpotServiceImpl(SpotRepository spotRepository, PaysRepository paysRepository, RegionRepository regionRepository, LongueurService longueurService, VoieService voieService, SecteurService secteurService) {
+    public SpotServiceImpl(SpotRepository spotRepository, PaysRepository paysRepository, RegionRepository regionRepository, LongueurService longueurService, VoieService voieService, SecteurService secteurService, CommentaireService commentaireService) {
         this.spotRepository = spotRepository;
         this.paysRepository = paysRepository;
         this.regionRepository = regionRepository;
         this.longueurService = longueurService;
         this.voieService = voieService;
         this.secteurService = secteurService;
+        this.commentaireService = commentaireService;
     }
 
     @Override
@@ -141,6 +141,12 @@ public class SpotServiceImpl implements SpotService {
             updateSpot.addSecteur(secteur);
         }
         return spotRepository.save(updateSpot);
+    }
+
+    @Override
+    public void addCommentToSpot(Integer spotId, String user, String message) {
+        Spot spotToComment = spotRepository.findById(spotId).orElse(null);
+        commentaireService.addComment(spotToComment, user, message);
     }
 
 }

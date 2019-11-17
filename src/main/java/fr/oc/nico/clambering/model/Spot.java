@@ -37,6 +37,9 @@ public class Spot implements Serializable {
 
     private boolean tagAmiEscalade = false;
 
+    @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL)
+    private List<Commentaire> commentaires = new ArrayList<>();
+
     @OneToMany(mappedBy = "spot", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Secteur> secteurs = new ArrayList<>();
     @ManyToOne

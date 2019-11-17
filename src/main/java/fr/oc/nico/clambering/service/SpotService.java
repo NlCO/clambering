@@ -33,4 +33,6 @@ public interface SpotService {
     SpotEditForm removeLongueurToSpot(SpotEditForm spotEditForm, String removeLongueur);
 
     Spot updateSpot(SpotEditForm spotEditForm);
+
+    void addCommentToSpot(Integer spotId, String user, String message);
 }

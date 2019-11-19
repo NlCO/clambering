@@ -2,7 +2,10 @@ package fr.oc.nico.clambering.service;
 
 
 import fr.oc.nico.clambering.DTO.*;
-import fr.oc.nico.clambering.model.*;
+import fr.oc.nico.clambering.model.Longueur;
+import fr.oc.nico.clambering.model.Secteur;
+import fr.oc.nico.clambering.model.Spot;
+import fr.oc.nico.clambering.model.Voie;
 import fr.oc.nico.clambering.repository.PaysRepository;
 import fr.oc.nico.clambering.repository.RegionRepository;
 import fr.oc.nico.clambering.repository.SpotRepository;
@@ -144,9 +147,14 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public void addCommentToSpot(Integer spotId, String user, String message) {
-        Spot spotToComment = spotRepository.findById(spotId).orElse(null);
-        commentaireService.addComment(spotToComment, user, message);
+    public void addCommentToSpot(CommentaireForm commentaireForm) {
+        Spot spotToComment = spotRepository.findById(commentaireForm.getSpotId()).orElse(null);
+        commentaireService.addComment(spotToComment, commentaireForm.getUser(), commentaireForm.getComment());
+    }
+
+    @Override
+    public CommentaireForm getEmptyCommentForm() {
+        return new CommentaireForm();
     }
 
 }

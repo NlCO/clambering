@@ -1,5 +1,6 @@
 package fr.oc.nico.clambering.service;
 
+import fr.oc.nico.clambering.DTO.CommentaireForm;
 import fr.oc.nico.clambering.DTO.SpotEditForm;
 import fr.oc.nico.clambering.DTO.SpotFormCriterias;
 import fr.oc.nico.clambering.DTO.SpotFormInfo;
@@ -34,5 +35,7 @@ public interface SpotService {
 
     Spot updateSpot(SpotEditForm spotEditForm);
 
-    void addCommentToSpot(Integer spotId, String user, String message);
+    void addCommentToSpot(CommentaireForm commentaireForm);
+
+    CommentaireForm getEmptyCommentForm();
 }

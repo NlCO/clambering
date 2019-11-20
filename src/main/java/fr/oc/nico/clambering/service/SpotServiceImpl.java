@@ -31,14 +31,17 @@ public class SpotServiceImpl implements SpotService {
 
     private final SecteurService secteurService;
 
+    private final CommentaireService commentaireService;
+
     @Autowired
-    public SpotServiceImpl(SpotRepository spotRepository, PaysRepository paysRepository, RegionRepository regionRepository, LongueurService longueurService, VoieService voieService, SecteurService secteurService) {
+    public SpotServiceImpl(SpotRepository spotRepository, PaysRepository paysRepository, RegionRepository regionRepository, LongueurService longueurService, VoieService voieService, SecteurService secteurService, CommentaireService commentaireService) {
         this.spotRepository = spotRepository;
         this.paysRepository = paysRepository;
         this.regionRepository = regionRepository;
         this.longueurService = longueurService;
         this.voieService = voieService;
         this.secteurService = secteurService;
+        this.commentaireService = commentaireService;
     }
 
     @Override
@@ -141,6 +144,17 @@ public class SpotServiceImpl implements SpotService {
             updateSpot.addSecteur(secteur);
         }
         return spotRepository.save(updateSpot);
+    }
+
+    @Override
+    public void addCommentToSpot(CommentaireForm commentaireForm) {
+        Spot spotToComment = spotRepository.findById(commentaireForm.getSpotId()).orElse(null);
+        commentaireService.addComment(spotToComment, commentaireForm.getUser(), commentaireForm.getComment());
+    }
+
+    @Override
+    public CommentaireForm getEmptyCommentForm() {
+        return new CommentaireForm();
     }
 
 }

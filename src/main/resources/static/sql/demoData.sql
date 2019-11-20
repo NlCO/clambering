@@ -30,3 +30,5 @@ INSERT INTO longueur (voie_voie_id,longueur_libelle,hauteur,cotation,id_relai_de
 INSERT INTO longueur (voie_voie_id,longueur_libelle,hauteur,cotation,id_relai_debut,id_relai_fin,degaine) VALUES (2,'a, arcu. Sed',16,'6a',1,2,2),(2,'fringilla.',15,'9a',2,NULL,1),(62,'ullamcorper, nisl arcu',11,'6b',1,NULL,0),(42,'ligula elit,',15,'6b',1,NULL,0);
 
 INSERT INTO utilisateur (email, pseudo, password, membre_association) VALUES ('user@test.com','azerty','$2a$10$F4ZTJ/zie.KtQjvmq.FZLeaVzbaVmzXCf1qZZQlX1UPvBBwXz1f.C','false'),('admin@test.com','qsdfgh','$2a$10$F4ZTJ/zie.KtQjvmq.FZLeaVzbaVmzXCf1qZZQlX1UPvBBwXz1f.C','true');
+
+INSERT INTO commentaire (utilisateur_utilisateur_id, spot_spot_id, commentaire, date_creation) VALUES (1,1,'test', '2019-11-18 21:13:35.737');

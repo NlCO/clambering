@@ -1,5 +1,6 @@
 package fr.oc.nico.clambering.controller;
 
+import fr.oc.nico.clambering.DTO.CommentaireForm;
 import fr.oc.nico.clambering.DTO.SpotEditForm;
 import fr.oc.nico.clambering.DTO.SpotFormCriterias;
 import fr.oc.nico.clambering.model.Spot;
@@ -41,6 +42,7 @@ public class SpotController {
     @GetMapping("/spots/{spotId}")
     public String spotInfo(Model model, @PathVariable Integer spotId) {
         model.addAttribute("spot", spotService.spotInfo(spotId));
+        model.addAttribute("commentForm", spotService.getEmptyCommentForm());
         LOGGER.debug("affichage de la les infos du spots");
         return "spot";
     }
@@ -97,5 +99,11 @@ public class SpotController {
     public String removeLongueur(final SpotEditForm spotEditForm, final BindingResult bindingResult, final Model model, @PathVariable Integer spotId, final HttpServletRequest req) {
         spotService.removeLongueurToSpot(spotEditForm, req.getParameter("removeLongueur"));
         return "spotEdition";
+    }
+
+    @PostMapping(value = "/spots/{spotId}/addCommentToSpot")
+    public String addCommentToSpot(@PathVariable Integer spotId, final CommentaireForm commentaireForm) {
+        spotService.addCommentToSpot(commentaireForm);
+        return "redirect:/spots/" + spotId;
     }
 }

@@ -56,7 +56,7 @@
         </div>
     </div>
 
-    <div class="container-fluid p-0" >
+    <div class="container-fluid p-0">
         <div class="card">
             <div class="card-header"><h5>Informations détaillées des secteurs</h5></div>
             <div class="card-body p-0">
@@ -95,6 +95,33 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid p-0 my-3">
+        <div class="card">
+            <div class="card-header"><h5>Commentaires des Membres</h5></div>
+            <div class="card-body">
+                <div class="media border" th:each="comment : ${spot.getCommentaires()}">
+                    <div class="media-body p-1">
+                        <h4><span th:utext="${comment.utilisateur.pseudo}"></span>  <small class="h6"><i>Le <span th:utext="${#dates.format(comment.dateCreation,'dd/MM/yyyy à HH:mm')}"></span></i></small></h4>
+                        <p th:utext="${comment.getCommentaire()}"> </p>
+                    </div>
+                </div>
+                <div th:if="${#authorization.expression('isAuthenticated()')}">
+                    <form method="post" th:object="${commentForm}" th:action="@{'/spots/' + ${spot.spotId} + '/addCommentToSpot'}" class="mt-2">
+                        <div>
+                            <input type="hidden" name="spotId" th:value="${spot.spotId}"/>
+                            <input type="hidden" name="user" th:value="${#request.getRemoteUser()}"/>
+                            <label for="comment">Ecriver votre commentaire ci-dessous :</label>
+                            <textarea class="w-100" id="comment" name="comment" th:field="*{comment}" required></textarea>
+                        </div>
+                        <div class="d-flex justify-content-end">
+                            <button class="btn btn-dark" type="submit">Poster</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>

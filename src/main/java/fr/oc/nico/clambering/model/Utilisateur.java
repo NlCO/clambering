@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
@@ -24,6 +25,9 @@ public class Utilisateur {
 
     @Column(columnDefinition = "boolean default false")
     private Boolean MembreAssociation;
+
+    @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
+    private List<Commentaire> commentaires;
 
     @Transient
     public String passwordConfirm;

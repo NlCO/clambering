@@ -38,6 +38,14 @@
                     </select>
                 </div>
                 <div class="m-2 d-flex align-items-start flex-column">
+                    <h5>Officiel :</h5>
+                    <select name="tagOfficiel" class="custom-select m-auto" th:field="${spotFormCriterias.tagOfficiel}">
+                        <option value="">Tous</option>
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                    </select>
+                </div>
+                <div class="m-2 d-flex align-items-start flex-column">
                     <h5>Secteur :</h5>
                     <div class="custom-control custom-switch m-auto">
                         <input type="checkbox" class="custom-control-input" id="switch1" th:field="${spotFormCriterias.multiSecteurs}">

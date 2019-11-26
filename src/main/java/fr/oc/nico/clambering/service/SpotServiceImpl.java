@@ -157,4 +157,13 @@ public class SpotServiceImpl implements SpotService {
         return new CommentaireForm();
     }
 
+    @Override
+    public void SwitchOfficialTag(Spot spot) {
+        if (spot.isTagAmiEscalade()) {
+            spot.setTagAmiEscalade(false);
+        } else {
+            spot.setTagAmiEscalade(true);
+        }
+        spotRepository.save(spot);
+    }
 }

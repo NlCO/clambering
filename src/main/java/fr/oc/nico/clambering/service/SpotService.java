@@ -38,4 +38,6 @@ public interface SpotService {
     void addCommentToSpot(CommentaireForm commentaireForm);
 
     CommentaireForm getEmptyCommentForm();
+
+    void SwitchOfficialTag(Spot spot);
 }

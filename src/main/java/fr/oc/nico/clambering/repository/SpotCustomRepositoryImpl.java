@@ -1,7 +1,7 @@
 package fr.oc.nico.clambering.repository;
 
-import fr.oc.nico.clambering.model.Spot;
 import fr.oc.nico.clambering.DTO.SpotFormCriterias;
+import fr.oc.nico.clambering.model.Spot;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -51,6 +51,14 @@ public class SpotCustomRepositoryImpl implements SpotCustomRepository {
 
         if (criterias.getMultiSecteurs()) {
             predicates.add(builder.gt(builder.size(spotRoot.get("secteurs")), 1));
+        }
+
+        if (criterias.getTagOfficiel().isPresent()) {
+            if (criterias.getTagOfficiel().orElse(false)) {
+                predicates.add(builder.isTrue((spotRoot.get("tagAmiEscalade"))));
+            } else {
+                predicates.add(builder.isFalse((spotRoot.get("tagAmiEscalade"))));
+            }
         }
 
         query.where(predicates.toArray(new Predicate[0]));

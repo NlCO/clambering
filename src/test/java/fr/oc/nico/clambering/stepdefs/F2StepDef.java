@@ -9,6 +9,7 @@ import fr.oc.nico.clambering.service.SpotService;
 import org.junit.Assert;
 
 import java.util.List;
+import java.util.Optional;
 
 public class F2StepDef {
 
@@ -38,8 +39,8 @@ public class F2StepDef {
         return (value.equals("null") ? "" : value);
     }
 
-    @Given("les critères (.*), (.*), (.*), (.*), (.*), (.*) sont choisis")
-    public void lesCriteresPaysRegionOrientationSecteurCotationMinCotationMaxSontChoisis(String pays, String region, String orientation, String secteur, String cotationMin, String cotationMax) {
+    @Given("les critères (.*), (.*), (.*), (.*), (.*), (.*), (.*) sont choisis")
+    public void lesCriteresPaysRegionOrientationSecteurCotationMinCotationMaxSontChoisis(String pays, String region, String orientation, String tagOfficiel, String secteur, String cotationMin, String cotationMax) {
         spotFormCriterias = new SpotFormCriterias();
         spotFormCriterias.setPays(setEmptyIfNull(pays));
         spotFormCriterias.setRegion(setEmptyIfNull(region));
@@ -47,5 +48,6 @@ public class F2StepDef {
         spotFormCriterias.setMultiSecteurs((secteur.equals("true")));
         spotFormCriterias.setCotationMin(setEmptyIfNull(cotationMin));
         spotFormCriterias.setCotationMax(setEmptyIfNull(cotationMax));
+        spotFormCriterias.setTagOfficiel(!tagOfficiel.equals("null") ? Optional.of(tagOfficiel.equals("true")) : Optional.empty());
     }
 }

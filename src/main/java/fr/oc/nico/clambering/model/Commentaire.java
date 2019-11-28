@@ -27,7 +27,14 @@ public class Commentaire {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dateCreation = new Date();
 
-    public Commentaire() {}
+    @ManyToOne
+    private Utilisateur moderateur = null;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dateModeration = null;
+
+    public Commentaire() {
+    }
 
     public Commentaire(Utilisateur utilisateur, Spot spot, String commentaire) {
         this.utilisateur = utilisateur;

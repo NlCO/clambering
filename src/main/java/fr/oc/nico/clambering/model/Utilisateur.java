@@ -11,24 +11,20 @@ import java.util.List;
 @Setter
 public class Utilisateur {
 
+    @Transient
+    public String passwordConfirm;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer utilisateurId;
-
     @Column(unique = true)
     private String email;
-
     @Column(unique = true)
     private String pseudo;
-
     private String password;
-
     @Column(columnDefinition = "boolean default false")
     private Boolean MembreAssociation;
-
     @OneToMany(mappedBy = "utilisateur", cascade = CascadeType.ALL)
     private List<Commentaire> commentaires;
-
-    @Transient
-    public String passwordConfirm;
+    @OneToMany(mappedBy = "moderateur", cascade = CascadeType.ALL)
+    private List<Commentaire> moderations;
 }

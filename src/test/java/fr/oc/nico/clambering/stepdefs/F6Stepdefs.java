@@ -31,7 +31,7 @@ public class F6Stepdefs {
 
     @When("je le tague")
     public void jeLeTague() {
-        spotService.SwitchOfficialTag(testSpot);
+        spotService.SwitchOfficialTag(testSpot.getSpotId());
     }
 
     @Then("le spot est tagué")
@@ -55,7 +55,7 @@ public class F6Stepdefs {
 
     @When("je le detague")
     public void jeLeDetague() {
-        spotService.SwitchOfficialTag(testSpot);
+        spotService.SwitchOfficialTag(testSpot.getSpotId());
     }
 
     @Then("le spot X est detagué")

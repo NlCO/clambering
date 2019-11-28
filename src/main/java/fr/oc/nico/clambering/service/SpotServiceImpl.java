@@ -158,7 +158,8 @@ public class SpotServiceImpl implements SpotService {
     }
 
     @Override
-    public void SwitchOfficialTag(Spot spot) {
+    public void SwitchOfficialTag(Integer spotId) {
+        Spot spot = spotRepository.findById(spotId).orElse(null);
         if (spot.isTagAmiEscalade()) {
             spot.setTagAmiEscalade(false);
         } else {

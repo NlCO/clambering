@@ -38,6 +38,14 @@
                     </select>
                 </div>
                 <div class="m-2 d-flex align-items-start flex-column">
+                    <h5>Officiel :</h5>
+                    <select name="tagOfficiel" class="custom-select m-auto" th:field="${spotFormCriterias.tagOfficiel}">
+                        <option value="">Tous</option>
+                        <option value="true">Oui</option>
+                        <option value="false">Non</option>
+                    </select>
+                </div>
+                <div class="m-2 d-flex align-items-start flex-column">
                     <h5>Secteur :</h5>
                     <div class="custom-control custom-switch m-auto">
                         <input type="checkbox" class="custom-control-input" id="switch1" th:field="${spotFormCriterias.multiSecteurs}">
@@ -71,6 +79,9 @@
         <div class="card-deck justify-content-around">
             <div th:each ="spot : ${spots}" class="card m-4 rounded" style="min-width:250px; max-width:250px">
                 <img class="card-img-top" th:src="'/img/' + ${spot.image}" th:alt="${spot.image}" style="height:200px">
+                <div th:if="${spot.tagAmiEscalade}" class="card-img-overlay p-0">
+                    <img src="/img/stamp.png" alt="stamp.png" class="float-right rounded-circle m-2" style="width: 4em">
+                </div>
                 <div class="card-body">
                     <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.spotLibelle}">...</h4></a>
                 </div>

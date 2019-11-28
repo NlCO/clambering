@@ -4,6 +4,8 @@ package fr.oc.nico.clambering.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Optional;
+
 @Getter
 @Setter
 public class SpotFormCriterias {
@@ -19,4 +21,6 @@ public class SpotFormCriterias {
     private String cotationMax = "";
 
     private Boolean multiSecteurs = false;
+
+    private Optional<Boolean> tagOfficiel = Optional.empty();
 }

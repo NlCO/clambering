@@ -1,4 +1,4 @@
-Feature: Ajout de commentaire
+Feature: F5 - Ajout de commentaire
 
   Un utilisateur connecté doit pouvoir laisser des commentaires sur les
   pages des sites d’escalade.

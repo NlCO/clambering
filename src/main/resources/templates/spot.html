@@ -115,7 +115,10 @@
             <div class="card-body">
                 <div class="media border" th:each="comment : ${spot.getCommentaires()}">
                     <div class="media-body p-1">
-                        <h4><span th:utext="${comment.utilisateur.pseudo}"></span>  <small class="h6"><i>Le <span th:utext="${#dates.format(comment.dateCreation,'dd/MM/yyyy à HH:mm')}"></span></i></small></h4>
+                        <div class="d-flex">
+                            <h4 class="mr-auto"><span th:utext="${comment.utilisateur.pseudo}"></span>  <small class="h6"><i>Le <span th:utext="${#dates.format(comment.dateCreation,'dd/MM/yyyy à HH:mm')}"></span></i></small></h4>
+                            <a sec:authorize="hasAuthority('Membre')" th:href="@{'/spot/' + ${spot.spotId} + '/commentaire/' + ${comment.commentaireId} + '/del'}" class="fas fa-trash-alt align-self-center m-1"></a>
+                        </div>
                         <p th:utext="${comment.getCommentaire()}"> </p>
                     </div>
                 </div>
@@ -141,7 +144,7 @@
         var lat = /*[[${spot.latitude}]]*/;
         var lon = /*[[${spot.longitude}]]*/;
 
-        var mymap = L.map('mapid').setView([lat, lon], 10);
+        var mymap = L.map('mapid').setView([lat, lon], 8);
 
         L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
             maxZoom: 18,

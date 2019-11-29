@@ -33,6 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 .antMatchers("/spots/{\\d+}/spotEdition/**").authenticated()
+                .antMatchers("/spot/{\\d+}/commentaire/{\\d+}/del").hasAuthority("Membre")
                 .antMatchers("/", "/spots/**", "/resources/**", "/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()

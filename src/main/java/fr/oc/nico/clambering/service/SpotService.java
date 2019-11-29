@@ -39,5 +39,5 @@ public interface SpotService {
 
     CommentaireForm getEmptyCommentForm();
 
-    void SwitchOfficialTag(Integer spotId);
+    void switchOfficialTag(Integer spotId);
 }

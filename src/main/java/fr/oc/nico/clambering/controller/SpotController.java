@@ -109,7 +109,7 @@ public class SpotController {
 
     @RequestMapping(value = "/spots/{spotId}", params = {"switchTag"})
     public String switchTagOfficiel(final Model model, @PathVariable Integer spotId) {
-        spotService.SwitchOfficialTag(spotId);
+        spotService.switchOfficialTag(spotId);
         return "redirect:/spots/{spotId}";
     }
 }

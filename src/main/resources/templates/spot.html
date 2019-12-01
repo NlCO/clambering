@@ -116,8 +116,36 @@
                 <div class="media border" th:each="comment : ${spot.getCommentaires()}">
                     <div class="media-body p-1">
                         <div class="d-flex">
-                            <h4 class="mr-auto"><span th:utext="${comment.utilisateur.pseudo}"></span>  <small class="h6"><i>Le <span th:utext="${#dates.format(comment.dateCreation,'dd/MM/yyyy à HH:mm')}"></span></i></small></h4>
-                            <a sec:authorize="hasAuthority('Membre')" th:href="@{'/spot/' + ${spot.spotId} + '/commentaire/' + ${comment.commentaireId} + '/del'}" class="fas fa-trash-alt align-self-center m-1"></a>
+                            <div class="mr-auto">
+                                <span th:utext="${comment.utilisateur.pseudo}" class="h4 mr-2"></span><small class="h6"><i>Le <span th:utext="${#dates.format(comment.dateCreation,'dd/MM/yyyy à HH:mm')}"></span></i></small>
+                                <span th:if="${comment.moderateur != null}"><small class="h6"><i><span th:utext="' - Edité par ' + ${comment.moderateur.pseudo} + ' Le ' + ${#dates.format(comment.dateModeration,'dd/MM/yyyy à HH:mm')}"></span></i></small></span>
+                            </div>
+                            <div sec:authorize="hasAuthority('Membre')" >
+                                <a th:href="'#editComment' + ${comment.commentaireId}" data-toggle="modal" class="fas fa-edit fa-2x align-self-center m-1"></a>
+                                <a th:href="@{'/spot/' + ${spot.spotId} + '/commentaire/' + ${comment.commentaireId} + '/del'}" class="fas fa-trash-alt fa-2x align-self-center m-1"></a>
+                                <!-- Modal -->
+                                <div class="modal fade" th:id="'editComment' + ${comment.commentaireId}" tabindex="-1" role="dialog" th:aria-labelledby="'editComment' + ${comment.commentaireId}" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <form method="post" th:action="@{'/spot/' + ${spot.spotId} + '/commentaire/' + ${comment.commentaireId} + '/edit'}" >
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="'editComment' + ${comment.commentaireId}">Commentaire à modifier</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <textarea th:name="commentEdit" th:value="${comment.commentaire}" class="w-100" th:text="${comment.commentaire}"></textarea>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                                    <button type="submit" class="btn btn-primary">Valider</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <p th:utext="${comment.getCommentaire()}"> </p>
                     </div>

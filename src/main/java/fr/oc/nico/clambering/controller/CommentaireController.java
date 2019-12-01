@@ -8,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class CommentaireController {
 
@@ -26,4 +28,9 @@ public class CommentaireController {
         return "redirect:/spots/" + spotId;
     }
 
+    @RequestMapping(value = "/spot/{spotId}/commentaire/{commentaireId}/edit")
+    public String editComment(@PathVariable Integer spotId, @PathVariable Integer commentaireId, final HttpServletRequest req) {
+        commentaireService.modifyComment(commentaireId, req.getRemoteUser(), req.getParameter("commentEdit"));
+        return "redirect:/spots/" + spotId;
+    }
 }

@@ -30,4 +30,15 @@ public class Topo {
     private Date dateParution;
 
     private Boolean dispo = false;
+
+    public Topo() {
+    }
+
+    public Topo(String topoLibelle,  Region lieu, String description, Date dateParution, Utilisateur proprietaire) {
+        this.topoLibelle = topoLibelle;
+        this.proprietaire = proprietaire;
+        this.lieu = lieu;
+        this.description = description;
+        this.dateParution = dateParution;
+    }
 }

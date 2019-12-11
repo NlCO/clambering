@@ -1,18 +1,14 @@
 package fr.oc.nico.clambering.stepdefs;
 
-import cucumber.api.java.en.Given;
-import cucumber.api.java.en.When;
-import cucumber.api.java.en.Then;
 import cucumber.api.java.en.And;
+import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
+import cucumber.api.java.en.When;
 import fr.oc.nico.clambering.DTO.TopoEditForm;
 import fr.oc.nico.clambering.model.Topo;
 import fr.oc.nico.clambering.repository.TopoRepository;
 import fr.oc.nico.clambering.service.TopoService;
 import org.junit.Assert;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 public class F8StepDef {
 
@@ -23,21 +19,13 @@ public class F8StepDef {
     private int nbTopos;
     private Topo topo;
 
-
-
     public F8StepDef(TopoRepository topoRepository, TopoService topoService) {
         this.topoRepository = topoRepository;
         this.topoService = topoService;
     }
 
     @Given("le topo (.*) sur la region (.*) paru le (.*) avec la description (.*)$")
-    public void leTopoSurLaRegionParuLeAvecLaDescription(String topoName, String region, String parution, String description) {
-        Date dateParution = null;
-        try {
-            dateParution = new SimpleDateFormat("dd/MM/yyyy").parse(parution);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+    public void leTopoSurLaRegionParuLeAvecLaDescription(String topoName, String region, String dateParution, String description) {
         topoEditForm = new TopoEditForm(topoName, description, region, dateParution);
     }
 
@@ -69,7 +57,7 @@ public class F8StepDef {
 
     @When("azerty rends sont statut disponible")
     public void azertyRendsSontStatutDisponible() {
-        topoService.switchDispo(topo);
+        topoService.switchDispo(topo.getTopoId());
     }
 
     @Then("le (.*) est maintenant disponible")
@@ -86,7 +74,7 @@ public class F8StepDef {
 
     @When("azerty rends sont statut indisponible")
     public void azertyRendsSontStatutIndisponible() {
-        topoService.switchDispo(topo);
+        topoService.switchDispo(topo.getTopoId());
     }
 
     @Then("le (.*) est maintenant indisponible")
@@ -101,9 +89,9 @@ public class F8StepDef {
         Assert.assertNotNull(topo);
     }
 
-    @When("azerty supprimre le topo")
-    public void azertySupprimreLeTopo() {
-        topoService.supprimerTopo(topo);
+    @When("(.*) supprime le topo")
+    public void azertySupprimeLeTopo(String user) {
+        topoService.supprimerTopo(user, topo.getTopoId());
     }
 
     @Then("le topo (.*) n'existe plus")

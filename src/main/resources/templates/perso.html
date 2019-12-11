@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}" >
+<head>
+    <title>Spot</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/leaflet/1.5.1/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="/webjars/leaflet/1.5.1/leaflet.js"></script>
+</head>
+<body>
+
+<main layout:fragment="content" class="container-fluid w-75">
+    <div class="card mt-5">
+        <div class="card-header h3">Mes Topos</div>
+        <div class="card-body">
+            <table class="table table-striped text-center">
+                <thead>
+                <th>Libelle</th>
+                <th>Region</th>
+                <th>description</th>
+                <th>Date de parution</th>
+                <th>Disponibilité</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <tr th:each="topo : ${topos}">
+                    <td th:utext="*{topo.topoLibelle}"></td>
+                    <td th:utext="*{topo.lieu.regionLibelle}"></td>
+                    <td th:utext="*{topo.description}" class="text-left"></td>
+                    <td th:utext="*{#dates.format(topo.dateParution,'dd/MM/yyyy')}"></td>
+                    <td><span th:utext="(*{topo.dispo} ? 'oui' : 'non')"></span><a th:href="@{'/topo/switchdispo/' + ${topo.topoId}}" class="fas fa-sync-alt ml-3"></a></td>
+                    <td><a th:href="@{'/topo/delete/' + ${topo.topoId}}" class="fas fa-trash-alt align-self-center m-1"></a></td>
+                </tr>
+                </tbody>
+            </table>
+            <button type="button" class="btn btn-dark" data-target="#ajoutTopo" data-toggle="modal">Ajouter un topo</button>
+            <!-- Modal -->
+            <div class="modal fade" th:id="ajoutTopo" tabindex="-1" role="dialog" th:aria-labelledby="ajoutTopo" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <form method="post" th:action="@{'/topo/addNew'}" th:object="${topoEditForm}">
+                            <div class="modal-header">
+                                <h5 class="modal-title">Informations sur le Topo</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <div class="row form-inline justify-content-around d-flex align-items-center">
+                                    <div class="form-group">
+                                        <label for="topoName" class="h5 m-3">Libellé du topo :</label>
+                                        <input id="topoName" type="text" th:field="*{topoLibelle}" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="region" class="h5 m-3">Région :</label>
+                                        <select id="region" class="custom-select m-auto" th:field="*{lieu}" required>
+                                            <option value=""></option>
+                                            <option th:each="r : ${formData}" th:value="${r.regionLibelle}" th:utext="${r.regionLibelle}"></option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="dateParution" class="h5 m-3">Date de parution :</label>
+                                        <input id="dateParution" type="date" th:field="*{dateParution}" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="topoDescription" class="h5 m-3">Description :</label>
+                                    <textarea id="topoDescription" th:field="*{description}" class="w-100" required></textarea>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</button>
+                                <button type="submit" class="btn btn-primary">Valider</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+</body>

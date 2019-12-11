@@ -9,7 +9,7 @@ Feature: F8 - Topos
   Background: Un user azerty connecté sur son profil
 
   Scenario: Ajout d'un topo
-    Given le topo topo1 sur la region Piemonte paru le 15/12/2019 avec la description les meilleurs spots
+    Given le topo topo1 sur la region Piemonte paru le 2019-12-15 avec la description les meilleurs spots
     And une base de données avec n topos
     When azerty enregistre le nouveau topo
     Then la base contient 1 topo de plus
@@ -27,5 +27,5 @@ Feature: F8 - Topos
 
   Scenario: Suppression d'un topo
     Given le topo topo1 existe
-    When azerty supprimre le topo
+    When azerty supprime le topo
     Then le topo topo1 n'existe plus

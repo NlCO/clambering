@@ -3,8 +3,6 @@ package fr.oc.nico.clambering.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 public class TopoEditForm {
@@ -16,12 +14,12 @@ public class TopoEditForm {
 
     private String lieu;
 
-    private Date dateParution;
+    private String dateParution;
 
     public TopoEditForm() {
     }
 
-    public TopoEditForm(String topoLibelle, String description, String lieu, Date dateParution) {
+    public TopoEditForm(String topoLibelle, String description, String lieu, String dateParution) {
         this.topoLibelle = topoLibelle;
         this.description = description;
         this.lieu = lieu;

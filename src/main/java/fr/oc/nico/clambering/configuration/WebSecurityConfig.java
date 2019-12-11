@@ -32,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/spots/{\\d+}/spotEdition/**").authenticated()
+                .antMatchers("/spots/{\\d+}/spotEdition/**", "/perso", "/topo/**").authenticated()
                 .antMatchers("/spot/{\\d+}/commentaire/{\\d+}/del", "/spot/{\\d+}/commentaire/{\\d+}/edit").hasAuthority("Membre")
                 .antMatchers("/", "/spots/**", "/resources/**", "/registration").permitAll()
                 .anyRequest().authenticated()

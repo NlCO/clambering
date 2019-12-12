@@ -27,4 +27,6 @@ public class Utilisateur {
     private List<Commentaire> commentaires;
     @OneToMany(mappedBy = "moderateur", cascade = CascadeType.ALL)
     private List<Commentaire> moderations;
+    @OneToMany(mappedBy = "proprietaire", cascade = CascadeType.ALL)
+    private List<Topo> topos;
 }

@@ -8,4 +8,4 @@ Feature: F5 - Ajout de commentaire
   Scenario: Ajouter un commentaire à un site
     Given Sur le spot Newark
     When l'utilisateur azerty post le commentaire super
-    Then le spot Newark a 1 commentaire
+    Then le spot Newark a 4 commentaire

@@ -24,4 +24,7 @@ public class Region {
     @OneToMany(mappedBy = "region")
     private List<Spot> spots;
 
+    @OneToMany(mappedBy = "lieu")
+    private List<Topo> topos;
+
 }

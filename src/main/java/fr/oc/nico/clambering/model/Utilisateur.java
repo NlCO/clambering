@@ -29,4 +29,6 @@ public class Utilisateur {
     private List<Commentaire> moderations;
     @OneToMany(mappedBy = "proprietaire", cascade = CascadeType.ALL)
     private List<Topo> topos;
+    @OneToMany(mappedBy = "emprunteur", cascade = CascadeType.ALL)
+    private List<Topo> emprunts;
 }

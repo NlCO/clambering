@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout.html}" >
+<head>
+    <title>Topos</title>
+    <link rel="stylesheet" type="text/css" href="/webjars/leaflet/1.5.1/leaflet.css" integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ==" crossorigin="">
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="/webjars/leaflet/1.5.1/leaflet.js"></script>
+</head>
+<body>
+
+<main layout:fragment="content" class="container-fluid w-75">
+    <div class="card mt-5">
+        <div class="card-header h3">Topos disponibles au prêt</div>
+        <div class="card-body">
+            <table class="table table-striped text-center">
+                <thead>
+                <th>Libelle</th>
+                <th>Region</th>
+                <th>description</th>
+                <th>Date de parution</th>
+                <th>Status</th>
+                <th>Reservation</th>
+                </thead>
+                <tbody>
+                <tr th:each="topo : ${topos}">
+                    <td th:utext="*{topo.topoLibelle}" class="align-middle"></td>
+                    <td th:utext="*{topo.lieu.regionLibelle}" class="align-middle"></td>
+                    <td th:utext="*{topo.description}" class="text-left align-middle"></td>
+                    <td th:utext="*{#dates.format(topo.dateParution,'dd/MM/yyyy')}" class="align-middle"></td>
+                    <td class="align-middle"><span th:if="*{topo.emprunteur != null}">réservation en cours</span></td>
+                    <td class="align-middle">
+                        <a th:if="*{topo.emprunteur == null}" th:href="@{'/topos/' + ${topo.topoId} + '/reserve'}" class="btn btn-dark rounded" role="button">Réserver</a>
+                        <a th:if="${topo.emprunteur != null && #request.getRemoteUser() == topo.emprunteur.pseudo}" th:href="@{'/topos/' + ${topo.topoId} + '/annuler'}" class="btn btn-dark rounded" role="button">Annuler</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</main>
+
+</body>

@@ -13,4 +13,6 @@ public interface TopoRepository extends JpaRepository<Topo, Integer> {
     Optional<Topo> findByTopoLibelle(String topoName);
 
     List<Topo> findAllByProprietaire(Utilisateur proprietaire);
+
+    List<Topo> findAllByProprietaireNotAndDispoIsTrue(Utilisateur proprietaire);
 }

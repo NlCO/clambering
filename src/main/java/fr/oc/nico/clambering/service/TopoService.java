@@ -18,4 +18,10 @@ public interface TopoService {
     List<Topo> getMesTopos(String user);
 
     List<Region> getFormData();
+
+    List<Topo> getToposDispo(String user);
+
+    void reserverTopo(String user, Integer topoId);
+
+    void annulerReservationTopo(String user, Integer topoId);
 }

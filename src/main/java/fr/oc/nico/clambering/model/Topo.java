@@ -31,10 +31,13 @@ public class Topo {
 
     private Boolean dispo = false;
 
+    @ManyToOne
+    private Utilisateur emprunteur;
+
     public Topo() {
     }
 
-    public Topo(String topoLibelle,  Region lieu, String description, Date dateParution, Utilisateur proprietaire) {
+    public Topo(String topoLibelle, Region lieu, String description, Date dateParution, Utilisateur proprietaire) {
         this.topoLibelle = topoLibelle;
         this.proprietaire = proprietaire;
         this.lieu = lieu;

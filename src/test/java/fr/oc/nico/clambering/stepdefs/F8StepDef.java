@@ -29,7 +29,7 @@ public class F8StepDef {
         topoEditForm = new TopoEditForm(topoName, description, region, dateParution);
     }
 
-    @And("une base de données avec n topos")
+    @And("une base de données contenant n topos")
     public void uneBaseDeDonneesAvecNTopos() {
         nbTopos = topoRepository.findAll().size();
     }

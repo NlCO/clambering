@@ -75,4 +75,29 @@ public class TopoServiceImpl implements TopoService {
     public List<Region> getFormData() {
         return regionRepository.findAll();
     }
+
+    @Override
+    public List<Topo> getToposDispo(String user) {
+        Utilisateur utilisateur = utilisateurRepository.findByPseudo(user);
+        return topoRepository.findAllByProprietaireNotAndDispoIsTrue(utilisateur);
+    }
+
+    @Override
+    public void reserverTopo(String user, Integer topoId) {
+        Topo topo = topoRepository.findById(topoId).orElse(null);
+        Utilisateur utilisateur = utilisateurRepository.findByPseudo(user);
+        if (topo.getEmprunteur() == null) {
+            topo.setEmprunteur(utilisateur);
+        }
+        topoRepository.save(topo);
+    }
+
+    @Override
+    public void annulerReservationTopo(String user, Integer topoId) {
+        Topo topo = topoRepository.findById(topoId).orElse(null);
+        if (topo.getDispo() && user.equals(topo.getEmprunteur().getPseudo())) {
+            topo.setEmprunteur(null);
+        }
+        topoRepository.save(topo);
+    }
 }

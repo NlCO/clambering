@@ -47,4 +47,23 @@ public class TopoController {
         topoService.supprimerTopo(request.getRemoteUser(), topoId);
         return "redirect:/perso";
     }
+
+    @GetMapping("/topos")
+    public String topos(Model model, HttpServletRequest request) {
+        String user = request.getRemoteUser();
+        model.addAttribute("topos", topoService.getToposDispo(user));
+        return "topos";
+    }
+
+    @RequestMapping(value = "/topos/{topoId}/reserve")
+    public String reserveTopo(@PathVariable Integer topoId, HttpServletRequest request) {
+        topoService.reserverTopo(request.getRemoteUser(), topoId);
+        return "redirect:/topos";
+    }
+
+    @RequestMapping(value = "/topos/{topoId}/annuler")
+    public String annuleResaTopo(@PathVariable Integer topoId, HttpServletRequest request) {
+        topoService.annulerReservationTopo(request.getRemoteUser(), topoId);
+        return "redirect:/topos";
+    }
 }

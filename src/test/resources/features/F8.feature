@@ -10,7 +10,7 @@ Feature: F8 - Topos
 
   Scenario: Ajout d'un topo
     Given le topo topo1 sur la region Piemonte paru le 2019-12-15 avec la description les meilleurs spots
-    And une base de données avec n topos
+    And une base de données contenant n topos
     When azerty enregistre le nouveau topo
     Then la base contient 1 topo de plus
     And le topo topo1 est présent dans la base

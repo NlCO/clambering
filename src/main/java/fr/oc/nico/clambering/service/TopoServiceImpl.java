@@ -86,7 +86,9 @@ public class TopoServiceImpl implements TopoService {
     public void reserverTopo(String user, Integer topoId) {
         Topo topo = topoRepository.findById(topoId).orElse(null);
         Utilisateur utilisateur = utilisateurRepository.findByPseudo(user);
-        topo.setEmprunteur(utilisateur);
+        if (topo.getEmprunteur() == null) {
+            topo.setEmprunteur(utilisateur);
+        }
         topoRepository.save(topo);
     }
 

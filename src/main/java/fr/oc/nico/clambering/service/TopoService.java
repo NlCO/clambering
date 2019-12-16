@@ -24,4 +24,8 @@ public interface TopoService {
     void reserverTopo(String user, Integer topoId);
 
     void annulerReservationTopo(String user, Integer topoId);
+
+    void confirmerReservation(String proprietaire, Integer topoId);
+
+    void retourPret(String proprietaire, Integer topoId);
 }

@@ -22,6 +22,8 @@ public class TopoServiceImpl implements TopoService {
     private RegionRepository regionRepository;
     private UtilisateurRepository utilisateurRepository;
 
+    private Topo topo;
+
     @Autowired
     public TopoServiceImpl(TopoRepository topoRepository, RegionRepository regionRepository, UtilisateurRepository utilisateurRepository) {
         this.topoRepository = topoRepository;
@@ -47,7 +49,7 @@ public class TopoServiceImpl implements TopoService {
 
     @Override
     public void switchDispo(Integer topoId) {
-        Topo topo = topoRepository.findById(topoId).orElse(null);
+        topo = getTopo(topoId);
         if (topo.getDispo()) {
             topo.setDispo(false);
         } else {
@@ -58,7 +60,7 @@ public class TopoServiceImpl implements TopoService {
 
     @Override
     public void supprimerTopo(String user, Integer topoId) {
-        Topo topo = topoRepository.findById(topoId).orElse(null);
+        topo = getTopo(topoId);
         String propietaire = topo.getProprietaire().getPseudo();
         if (propietaire.equals(user)) {
             topoRepository.delete(topo);
@@ -84,7 +86,7 @@ public class TopoServiceImpl implements TopoService {
 
     @Override
     public void reserverTopo(String user, Integer topoId) {
-        Topo topo = topoRepository.findById(topoId).orElse(null);
+        topo = getTopo(topoId);
         Utilisateur utilisateur = utilisateurRepository.findByPseudo(user);
         if (topo.getEmprunteur() == null) {
             topo.setEmprunteur(utilisateur);
@@ -94,10 +96,33 @@ public class TopoServiceImpl implements TopoService {
 
     @Override
     public void annulerReservationTopo(String user, Integer topoId) {
-        Topo topo = topoRepository.findById(topoId).orElse(null);
+        topo = getTopo(topoId);
         if (topo.getDispo() && user.equals(topo.getEmprunteur().getPseudo())) {
             topo.setEmprunteur(null);
         }
         topoRepository.save(topo);
+    }
+
+    @Override
+    public void confirmerReservation(String proprietaire, Integer topoId) {
+        topo = getTopo(topoId);
+        if (proprietaire.equals(topo.getProprietaire().getPseudo())) {
+            topo.setDispo(false);
+        }
+        topoRepository.save(topo);
+    }
+
+    @Override
+    public void retourPret(String proprietaire, Integer topoId) {
+        topo = getTopo(topoId);
+        if (proprietaire.equals(topo.getProprietaire().getPseudo()) && !topo.getDispo()) {
+            topo.setDispo(true);
+            topo.setEmprunteur(null);
+        }
+        topoRepository.save(topo);
+    }
+
+    private Topo getTopo(Integer topoId) {
+        return topoRepository.findById(topoId).orElse(null);
     }
 }

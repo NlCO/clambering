@@ -29,8 +29,8 @@
                     <td th:utext="*{topo.lieu.regionLibelle}"></td>
                     <td th:utext="*{topo.description}" class="text-left"></td>
                     <td th:utext="*{#dates.format(topo.dateParution,'dd/MM/yyyy')}"></td>
-                    <td><span th:utext="(*{topo.dispo} ? 'oui' : 'non')"></span><a th:href="@{'/topo/switchdispo/' + ${topo.topoId}}" class="fas fa-sync-alt ml-3"></a></td>
-                    <td><a th:href="@{'/topo/delete/' + ${topo.topoId}}" class="fas fa-trash-alt align-self-center m-1"></a></td>
+                    <td><span th:utext="(*{topo.dispo} ? 'oui' : 'non')"></span><a class="fas fa-sync-alt ml-3" th:href="@{'/topo/switchdispo/' + ${topo.topoId}}" th:if="*{topo.emprunteur == null}"></a></td>
+                    <td><a class="fas fa-trash-alt align-self-center m-1" th:href="@{'/topo/delete/' + ${topo.topoId}}" th:if="*{topo.emprunteur == null}"></a></td>
                 </tr>
                 </tbody>
             </table>
@@ -79,7 +79,31 @@
             </div>
         </div>
     </div>
-
+    <div class="card mt-3">
+        <div class="card-header h3">Gestion des réservations</div>
+        <div class="card-body">
+            <table class="table table-striped text-center">
+                <thead>
+                <th>Libelle</th>
+                <th>emprunteur</th>
+                <th>email de contact</th>
+                <th>Action</th>
+                </thead>
+                <tbody>
+                <tr th:each="topo : ${topos.?[emprunteur != null]}">
+                    <td th:utext="*{topo.topoLibelle}"></td>
+                    <td th:utext="*{topo.emprunteur.pseudo}"></td>
+                    <td th:utext="*{topo.emprunteur.email}"></td>
+                    <td class="align-middle">
+                        <a class="btn btn-dark rounded" role="button" th:href="@{'/topos/' + ${topo.topoId} + '/reserveaccepte'}" th:if="*{topo.dispo}">Accepter</a>
+                        <a class="btn btn-dark rounded" role="button" th:href="@{'/topos/' + ${topo.topoId} + '/reserverefuse'}" th:if="*{topo.dispo}">Refuser</a>
+                        <a class="btn btn-dark rounded" role="button" th:href="@{'/topos/' + ${topo.topoId} + '/retourner'}" th:if="*{!topo.dispo}">Retourner</a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </main>
 
 </body>

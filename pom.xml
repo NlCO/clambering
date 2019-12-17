@@ -11,7 +11,7 @@
 	<groupId>fr.oc.nico</groupId>
 	<artifactId>clambering</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 	<name>clambering</name>
 	<description>Site pour le projet6 openclassroom</description>
 
@@ -147,7 +147,17 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<useSystemClassLoader>true</useSystemClassLoader>
+					<forkCount>10</forkCount>
+					<reuseForks>true</reuseForks>
+				</configuration>
+			</plugin>
 		</plugins>
+
 	</build>
 
 </project>

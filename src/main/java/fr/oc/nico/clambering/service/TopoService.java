@@ -28,4 +28,6 @@ public interface TopoService {
     void confirmerReservation(String proprietaire, Integer topoId);
 
     void retourPret(String proprietaire, Integer topoId);
+
+    void refuserReservation(String proprietaire, Integer topoId);
 }

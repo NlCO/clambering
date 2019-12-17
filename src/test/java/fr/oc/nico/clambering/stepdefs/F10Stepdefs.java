@@ -64,4 +64,8 @@ public class F10Stepdefs {
         Assert.assertTrue(topo.getDispo());
     }
 
+    @When("le proprietaire (.*) refuse la réservation du topo (.*)$")
+    public void leProprietaireRefuseLaReservationDuTopo(String proprietaire, String topoLibelle) {
+        topoService.refuserReservation(proprietaire, topo.getTopoId());
+    }
 }

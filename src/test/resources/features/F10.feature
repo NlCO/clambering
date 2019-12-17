@@ -17,3 +17,8 @@ Feature: F10 - Pret TOPO
     When le proprietaire qsdfgh confirme que le topo erat est rendu
     Then le topo erat n'est plus emprunté
     And son statut est de nouveau disponible
+
+  Scenario: Refuser une réservation
+    Given Une réservation du topo erat par azerty
+    When le proprietaire qsdfgh refuse la réservation du topo erat
+    Then le topo erat n'est plus emprunté

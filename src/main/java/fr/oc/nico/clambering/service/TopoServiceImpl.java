@@ -122,6 +122,15 @@ public class TopoServiceImpl implements TopoService {
         topoRepository.save(topo);
     }
 
+    @Override
+    public void refuserReservation(String proprietaire, Integer topoId) {
+        topo = getTopo(topoId);
+        if (proprietaire.equals(topo.getProprietaire().getPseudo())) {
+            topo.setEmprunteur(null);
+        }
+        topoRepository.save(topo);
+    }
+
     private Topo getTopo(Integer topoId) {
         return topoRepository.findById(topoId).orElse(null);
     }

@@ -1,8 +1,10 @@
 HELP.md
 target/
-!.mvn/wrapper/maven-wrapper.jar
+.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+mwnw
+mwn.cmd
 
 ### STS ###
 .apt_generated

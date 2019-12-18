@@ -1,0 +1,1 @@
+INSERT INTO utilisateur (email, pseudo, password, membre_association) VALUES ('administrateur@admin.com','admin','$2a$10$F4ZTJ/zie.KtQjvmq.FZLeaVzbaVmzXCf1qZZQlX1UPvBBwXz1f.C','true');

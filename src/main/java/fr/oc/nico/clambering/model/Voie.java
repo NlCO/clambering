@@ -10,6 +10,9 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.NoSuchElementException;
 
+/**
+ * Entité model des voies
+ */
 @Entity
 @Getter
 @Setter

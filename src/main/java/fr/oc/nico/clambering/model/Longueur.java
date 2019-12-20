@@ -5,6 +5,9 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Entité model des longueurs
+ */
 @Entity
 @Getter
 @Setter

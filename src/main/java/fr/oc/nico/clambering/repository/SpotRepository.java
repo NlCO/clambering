@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
+/**
+ * Repository pour l'entité spot géré par le framework SpringData
+ */
 @Repository
 public interface SpotRepository extends JpaRepository<Spot, Integer>, SpotCustomRepository {
 

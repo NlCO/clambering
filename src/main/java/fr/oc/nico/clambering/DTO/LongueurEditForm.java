@@ -3,6 +3,9 @@ package fr.oc.nico.clambering.DTO;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Object contenant les champs du formulaire liés aux longueurs
+ */
 @Getter
 @Setter
 public class LongueurEditForm {

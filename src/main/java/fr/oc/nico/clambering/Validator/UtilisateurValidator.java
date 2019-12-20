@@ -8,6 +8,9 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
+/**
+ * Implementation custom des validations utilisées par SpringSecurity pour l'authentification
+ */
 @Component
 public class UtilisateurValidator implements Validator {
 
@@ -23,6 +26,11 @@ public class UtilisateurValidator implements Validator {
         return Utilisateur.class.equals(aClass);
     }
 
+    /**
+     * Permet de valider un objet
+     * @param o objets à valider
+     * @param errors list des erreurs constatées
+     */
     @Override
     public void validate(Object o, Errors errors) {
         Utilisateur utilisateur = (Utilisateur) o;

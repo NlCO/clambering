@@ -7,6 +7,9 @@ import lombok.Setter;
 
 import java.util.List;
 
+/**
+ * Object contenant les données préremplies dans les formulaires
+ */
 @Getter
 @Setter
 public class SpotFormInfo {

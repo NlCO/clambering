@@ -6,6 +6,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Object contenant les champs du formulaire liés aux spots
+ */
 @Getter
 @Setter
 public class SpotEditForm {

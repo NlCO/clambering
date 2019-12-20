@@ -11,6 +11,9 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Implementation custom du repository de l'entité spot
+ */
 public class SpotCustomRepositoryImpl implements SpotCustomRepository {
 
     private EntityManager em;
@@ -19,6 +22,12 @@ public class SpotCustomRepositoryImpl implements SpotCustomRepository {
         this.em = em;
     }
 
+    /**
+     * Permet de faire une recherche d'un liste de spot en fonction des données présentes dans le formulaire
+     *
+     * @param criterias formulaire
+     * @return la liste des spots filtrés
+     */
     @Override
     public List<Spot> multiCriteriaSpotSearch(SpotFormCriterias criterias) {
 

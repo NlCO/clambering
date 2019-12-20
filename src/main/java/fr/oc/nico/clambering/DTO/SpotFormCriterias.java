@@ -6,6 +6,9 @@ import lombok.Setter;
 
 import java.util.Optional;
 
+/**
+ * Object contenant les champs du formulaire liés aux filtre des spots
+ */
 @Getter
 @Setter
 public class SpotFormCriterias {

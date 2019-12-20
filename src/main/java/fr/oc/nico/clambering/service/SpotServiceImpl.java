@@ -16,6 +16,9 @@ import javax.persistence.EntityNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Implémantation de l'interface de gestion de la couche service liés aux spots
+ */
 @Service("SpotService")
 public class SpotServiceImpl implements SpotService {
 
@@ -44,17 +47,34 @@ public class SpotServiceImpl implements SpotService {
         this.commentaireService = commentaireService;
     }
 
+    /**
+     * Fournit les informations d'un spot à partir de son ID
+     *
+     * @param spotId id du spot
+     * @return le spot
+     */
     @Override
     public Spot spotInfo(Integer spotId) {
         return spotRepository.findById(spotId)
                 .orElseThrow(() -> new EntityNotFoundException("Le spot " + spotId + " n'exite pas"));
     }
 
+    /**
+     * Fournit la liste des spot correspondant au critères du formulaire
+     *
+     * @param criterias données du formulaire
+     * @return la liste des spots
+     */
     @Override
     public List<Spot> filterSpots(SpotFormCriterias criterias) {
         return spotRepository.multiCriteriaSpotSearch(criterias);
     }
 
+    /**
+     * Fournit les données pré-remplies pour le formulaire d'edition de spot
+     *
+     * @return les données du formulaire
+     */
     @Override
     public SpotFormInfo getSpotFormInfo() {
         List<String> orientations = Arrays.asList("Nord", "Nord-Est", "Est", "Sud-Est", "Sud", "Sud-Ouest", "Ouest", "Nord-Ouest");
@@ -62,6 +82,11 @@ public class SpotServiceImpl implements SpotService {
         return new SpotFormInfo(paysRepository.findAll(), regionRepository.findAll(), orientations, cotations);
     }
 
+    /**
+     * Fournit un formulaire vierge de création de spot
+     *
+     * @return un formulaire vierge
+     */
     @Override
     public SpotEditForm getSpotEditForm() {
         LongueurEditForm emptyLongueur = new LongueurEditForm();
@@ -74,6 +99,12 @@ public class SpotServiceImpl implements SpotService {
         return spotEditForm;
     }
 
+    /**
+     * Fournit un formulaire pré-rempli d'édition de spot
+     *
+     * @param spot information à passer dans le formulaire
+     * @return un formulaire pré-remplis
+     */
     @Override
     public SpotEditForm getSpotEditForm(Spot spot) {
         SpotEditForm spotEditForm = new SpotEditForm(spot.getSpotId(), spot.getRegion().getRegionLibelle(), spot.getSpotLibelle(), spot.getSpotDescription(), spot.getAcces(), spot.getOrientation(), spot.getLongitude(), spot.getLatitude(), spot.getImage());
@@ -91,17 +122,36 @@ public class SpotServiceImpl implements SpotService {
         return spotEditForm;
     }
 
+    /**
+     * Ajoute un secteur au formulaire du spot
+     *
+     * @param spotEditForm formulaire du spot
+     */
     @Override
     public void addNewSecteurToSpot(SpotEditForm spotEditForm) {
         spotEditForm.addSecteur(secteurService.getNewSecteur());
     }
 
+    /**
+     * Ajoute une voie à un secteur du formulaire d'édition du spot
+     *
+     * @param spotEditForm formulaire à modifier
+     * @param addVoie      voie à ajouter
+     * @return le formulaire mis à jour
+     */
     @Override
     public SpotEditForm addNewVoieToSpot(SpotEditForm spotEditForm, String addVoie) {
         spotEditForm.getSecteurs().get(Integer.parseInt(addVoie)).addvoie(voieService.getNewVoie());
         return spotEditForm;
     }
 
+    /**
+     * Ajoute une longueur à une voie d'un secteur dans le formulaire d'édition du spot
+     *
+     * @param spotEditForm fomulaire à modifier
+     * @param addLongueur  longueur à ajouter
+     * @return le formulaire mis à jour
+     */
     @Override
     public SpotEditForm addNewLongueurToSpot(SpotEditForm spotEditForm, String addLongueur) {
         String[] indexes = addLongueur.split("_");
@@ -109,12 +159,26 @@ public class SpotServiceImpl implements SpotService {
         return spotEditForm;
     }
 
+    /**
+     * Retire un secteur au formulaire du spot
+     *
+     * @param spotEditForm  formulaire à modifier
+     * @param removeSecteur secteur à retirer
+     * @return le formulaire mis à jour
+     */
     @Override
     public SpotEditForm removeSecteurToSpot(SpotEditForm spotEditForm, String removeSecteur) {
         spotEditForm.getSecteurs().remove(Integer.parseInt(removeSecteur));
         return spotEditForm;
     }
 
+    /**
+     * Retire une voie à un secteur dans le formulaire d'édition du spot
+     *
+     * @param spotEditForm formulaire à modifier
+     * @param removeVoie   voie à retirer
+     * @return le formulaire mis à jour
+     */
     @Override
     public SpotEditForm removeVoieToSpot(SpotEditForm spotEditForm, String removeVoie) {
         String[] indexes = removeVoie.split("_");
@@ -122,6 +186,13 @@ public class SpotServiceImpl implements SpotService {
         return spotEditForm;
     }
 
+    /**
+     * Retire une longueur à une voie d'un secteur dans le formulaire d'édition du spot
+     *
+     * @param spotEditForm   formulaire à modifier
+     * @param removeLongueur longueur à retirer
+     * @return le formulaire mis à jour
+     */
     @Override
     public SpotEditForm removeLongueurToSpot(SpotEditForm spotEditForm, String removeLongueur) {
         String[] indexes = removeLongueur.split("_");
@@ -129,6 +200,12 @@ public class SpotServiceImpl implements SpotService {
         return spotEditForm;
     }
 
+    /**
+     * Mets à jour le spot avec les donnée du formulaire
+     *
+     * @param spotEditForm formulaire
+     * @return le spot mis à jour
+     */
     @Override
     public Spot updateSpot(SpotEditForm spotEditForm) {
         Spot updateSpot = new Spot(spotEditForm.getSpotId(), spotEditForm.getSpotNom(), regionRepository.findByRegionLibelle(spotEditForm.getRegion()), spotEditForm.getSpotDescription(), spotEditForm.getAcces(), spotEditForm.getOrientation(), spotEditForm.getLongitude(), spotEditForm.getLatitude(), spotEditForm.getImage());
@@ -146,17 +223,32 @@ public class SpotServiceImpl implements SpotService {
         return spotRepository.save(updateSpot);
     }
 
+    /**
+     * Ajoute un commentaire à un spot
+     *
+     * @param commentaireForm formulaire d'ajout de commentaire
+     */
     @Override
     public void addCommentToSpot(CommentaireForm commentaireForm) {
         Spot spotToComment = spotRepository.findById(commentaireForm.getSpotId()).orElse(null);
         commentaireService.addComment(spotToComment, commentaireForm.getUser(), commentaireForm.getComment());
     }
 
+    /**
+     * Fournit un formulaire de commentaire vide
+     *
+     * @return un formulaire vierge
+     */
     @Override
     public CommentaireForm getEmptyCommentForm() {
         return new CommentaireForm();
     }
 
+    /**
+     * Inverse le statut du tag officiel des amis de l'escalade
+     *
+     * @param spotId Id du spot concerné
+     */
     @Override
     public void switchOfficialTag(Integer spotId) {
         Spot spot = spotRepository.findById(spotId).orElse(null);

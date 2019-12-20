@@ -6,6 +6,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Object contenant les champs du formulaire liés aux secteurs
+ */
 @Getter
 @Setter
 public class SecteurEditForm {
@@ -18,10 +21,6 @@ public class SecteurEditForm {
 
     private List<VoieEditForm> voies = new ArrayList<>();
 
-    public void addvoie(VoieEditForm voie) {
-        this.voies.add(voie);
-    }
-
     public SecteurEditForm() {
     }
 
@@ -29,5 +28,9 @@ public class SecteurEditForm {
         this.secteurId = secteurId;
         this.secteurNom = secteurNom;
         this.secteurDescription = secteurDescription;
+    }
+
+    public void addvoie(VoieEditForm voie) {
+        this.voies.add(voie);
     }
 }

@@ -15,6 +15,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.HashSet;
 import java.util.Set;
 
+/**
+ * Implementation custom de la couche de service UserDetails de SpringSecurity
+ */
 @Service("UserDetailsService")
 @Primary
 //annotation Primary pour résoudre les erreurs d'autowired : there is more than one UserDetailsService
@@ -27,6 +30,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.utilisateurRepository = utilisateurRepository;
     }
 
+    /**
+     * Fournit le informations d'un user au framework springsecurity
+     *
+     * @param pseudo pseudo du user
+     * @return un objet UserDetails pour springsecurity
+     * @throws UsernameNotFoundException si le user n'existe pas
+     */
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String pseudo) throws UsernameNotFoundException {

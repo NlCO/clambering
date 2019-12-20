@@ -6,7 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.List;
 
-
+/**
+ * Entité model des pays
+ */
 @Getter
 @Setter
 @Entity

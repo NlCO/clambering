@@ -7,6 +7,9 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+/**
+ * Implémantation de l'interface de gestion de la couche service liés aux utilisateurs
+ */
 @Service("UtilisateurService")
 public class UtilisateurServiceImpl implements UtilisateurService {
 
@@ -20,6 +23,12 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
+    /**
+     * Permet l'inscription d'un utilisateur
+     *
+     * @param utilisateur utilisateur
+     * @return
+     */
     @Override
     public String inscrire(Utilisateur utilisateur) {
         try {
@@ -32,11 +41,23 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         }
     }
 
+    /**
+     * Retourne l'utilisateur à partir de son pseudo
+     *
+     * @param pseudo pseudo
+     * @return l'utilisateur
+     */
     @Override
     public Utilisateur findByPseudo(String pseudo) {
         return utilisateurRepository.findByPseudo(pseudo);
     }
 
+    /**
+     * Retourne l'utilisateur à partir de son email
+     *
+     * @param email email
+     * @return l'utilisateur
+     */
     @Override
     public Utilisateur findByEmail(String email) {
         return utilisateurRepository.findByEmail(email);

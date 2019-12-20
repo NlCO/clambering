@@ -7,6 +7,9 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Object contenant les champs du formulaire liés aux voies
+ */
 @Getter
 @Setter
 public class VoieEditForm {

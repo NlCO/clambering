@@ -6,6 +6,9 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Entité model des topos
+ */
 @Entity
 @Getter
 @Setter

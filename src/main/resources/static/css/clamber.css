@@ -2,5 +2,23 @@ body {
     background-color: #c0e8d5;
 }
 
+.cotationFilter {
+    width: 8em;
+}
 
+.card-deck .card {
+    min-width: 250px;
+    max-width: 250px;
+}
 
+.card-deck .card-img-top {
+    height: 200px;
+}
+
+#stamped {
+    width: 5em;
+}
+
+#mapid {
+    height: 25em;
+}

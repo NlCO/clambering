@@ -21,7 +21,7 @@
         </form>
     </div>
     <div class="jumbotron m-2 p-0">
-        <img alt="stamp.png" class="float-right rounded-circle m-3" style="width: 5em" th:if="${spot.tagAmiEscalade}" th:src="@{/img/stamp.png}">
+        <img alt="stamp.png" class="float-right rounded-circle m-3" id="stamped" th:if="${spot.tagAmiEscalade}" th:src="@{/img/stamp.png}">
         <div class="p-4">
             <h5 class="text-center mx-5 my-1 px-5"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.codePays} + ' mr-2'"></span><span th:utext="${spot.region.pays.paysLibelle}"></span> - <span th:utext="${spot.region.regionLibelle}"></span> </h5>
             <h1 th:utext=" ${spot.spotLibelle}" class="text text-center mx-5 my-1 px-5"></h1>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="card rounded w-100">
                     <div class="card-header"><h5>Map</h5></div>
-                    <div class="card-body" id="mapid" style="height: 25em"></div>
+                    <div class="card-body" id="mapid"></div>
                 </div>
             </div>
         </div>

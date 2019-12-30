@@ -53,15 +53,15 @@
                     </div>
                 </div>
                 <div class="m-2">
-                    <h5>Cotation (spot ayant des Longueurs) :</h5>
+                    <h5>Cotation des Longueurs :</h5>
                     <div class="d-flex justify-content-around align-items-baseline">
-                        <p>plus de : </p>
-                        <select name="cotMin" class="custom-select m-3" th:field="${spotFormCriterias.cotationMin}" style="width: 8em">
+                        <p>Min. : </p>
+                        <select class="custom-select m-3 cotationFilter" name="cotMin" th:field="${spotFormCriterias.cotationMin}">
                             <option value=""></option>
                             <option th:each="c : ${formData.getCotations()}" th:value="${c}" th:utext="${c}"></option>
                         </select>
-                        <p>moins de : </p>
-                        <select name="cotMax" class="custom-select m-3" th:field="${spotFormCriterias.cotationMax}" style="width: 8em">
+                        <p>Max. : </p>
+                        <select class="custom-select m-3 cotationFilter" name="cotMax" th:field="${spotFormCriterias.cotationMax}">
                             <option value=""></option>
                             <option th:each="c : ${formData.getCotations()}" th:value="${c}" th:utext="${c}"></option>
                         </select>
@@ -77,10 +77,10 @@
     </div>
     <div class="container-fluid w-75">
         <div class="card-deck justify-content-around">
-            <div th:each ="spot : ${spots}" class="card m-4 rounded" style="min-width:250px; max-width:250px">
-                <img class="card-img-top" th:src="'/img/' + ${spot.image}" th:alt="${spot.image}" style="height:200px">
+            <div class="card m-4 rounded" th:each ="spot : ${spots}">
+                <img class="card-img-top" th:alt="${spot.image}" th:src="'/img/' + ${spot.image}">
                 <div th:if="${spot.tagAmiEscalade}" class="card-img-overlay p-0">
-                    <img src="/img/stamp.png" alt="stamp.png" class="float-right rounded-circle m-2" style="width: 4em">
+                    <img alt="stamp.png" class="float-right rounded-circle m-2" id="stamped" src="/img/stamp.png">
                 </div>
                 <div class="card-body">
                     <a th:href="@{'spots/' + ${spot.spotId}}" class="stretched-link"><h4 class="card-title" th:utext="${spot.spotLibelle}">...</h4></a>

@@ -1,33 +1,29 @@
 <!DOCTYPE html>
-<html lang="fr" xmlns="http://www.w3.org/1999/html" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" xmlns:th="http://www.thymeleaf.org"
-      layout:decorate="~{layout.html}">
+<html lang="fr" layout:decorate="~{layout.html}" xmlns="http://www.w3.org/1999/html"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Home</title>
 </head>
 <body>
-
 <main layout:fragment="content">
-    <form id="logoutForm" method="POST" th:action="@{/logout}">
-        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    </form>
-    <div class="container">
-        <h1>Bonjour</h1>
+    <div class="jumbotron m-4">
+        <div class="text-center">
+            <img alt="logo" class="rounded" th:src="@{/img/logo.png}">
+            <h1 class="display-4 align-items-center">Bienvenue sur Clamber</h1>
+            <p class="lead">Site communautaire de l'association <strong>"Les amis de l'escalade"</strong>.</p>
+        </div>
+        <hr>
+        <p>Vous trouverez sur le site les informations partagées par les utilisateurs sur des spots d'escalade.</p>
+        <p>Vous pourrez aussi réserver des topos fournis par d'autres utilisateurs.</p>
+        <p>Nous vous invitons également à partager vos propres topos afin de faire vivre notre communauté.</p>
     </div>
-    <div class="container">
+    <div class="d-flex justify-content-around">
         <a class="btn btn-dark btn-lg" role="button" th:href="@{/spots}">Consulter les spots</a>
-
-        <!--
-        <h3>Contribuez et partagez vos spots et vos topos </h3>
-        <p>Se loguer   ou    s'incrire gratuitement</p>
-        <p>Venez découvrir les spots proposés par les membres du sites</p>
-        <p>Inscrivez Vous</p>
-        <p>connectez vous et commentez vos impressions sur les spots proposés</p>
-        <p>Inscrivez vous gratuitement pour partager vos informations ou vos TOPOs</p>
-        -->
+        <a class="btn btn-dark btn-lg" role="button" th:href="@{/topos}">Réserver un topo</a>
+        <a class="btn btn-dark btn-lg" role="button" th:href="@{/perso}">Partager un topo</a>
     </div>
-
 </main>
-
 </body>
 </html>
 

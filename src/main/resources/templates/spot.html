@@ -21,7 +21,7 @@
         </form>
     </div>
     <div class="jumbotron m-2 p-0">
-        <img th:if="${spot.tagAmiEscalade}" src="/img/stamp.png" alt="stamp.png" class="float-right rounded-circle m-3" style="width: 5em">
+        <img alt="stamp.png" class="float-right rounded-circle m-3" id="stamped" th:if="${spot.tagAmiEscalade}" th:src="@{/img/stamp.png}">
         <div class="p-4">
             <h5 class="text-center mx-5 my-1 px-5"><span th:class="'flag-icon flag-icon-' + ${spot.region.pays.codePays} + ' mr-2'"></span><span th:utext="${spot.region.pays.paysLibelle}"></span> - <span th:utext="${spot.region.regionLibelle}"></span> </h5>
             <h1 th:utext=" ${spot.spotLibelle}" class="text text-center mx-5 my-1 px-5"></h1>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="card rounded w-100">
                     <div class="card-header"><h5>Map</h5></div>
-                    <div class="card-body" id="mapid" style="height: 25em"></div>
+                    <div class="card-body" id="mapid"></div>
                 </div>
             </div>
         </div>
@@ -168,25 +168,9 @@
     </div>
 
     <script th:inline="javascript">
-
-        var lat = /*[[${spot.latitude}]]*/;
-        var lon = /*[[${spot.longitude}]]*/;
-
-        var mymap = L.map('mapid').setView([lat, lon], 8);
-
-        L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-            maxZoom: 18,
-            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, ' +
-                '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
-                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-            id: 'mapbox.outdoors'
-        }).addTo(mymap);
-
-        L.marker([lat, lon]).addTo(mymap);
-
-
-        var popup = L.popup();
-
+        var lat = /*[[${spot.latitude}]]*/ 0;
+        var lon = /*[[${spot.longitude}]]*/ 0;
+        affichageMap(lat,lon);
     </script>
 </main>
 

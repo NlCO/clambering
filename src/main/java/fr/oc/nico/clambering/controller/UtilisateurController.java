@@ -1,6 +1,6 @@
 package fr.oc.nico.clambering.controller;
 
-import fr.oc.nico.clambering.Validator.UtilisateurValidator;
+import fr.oc.nico.clambering.configuration.UtilisateurValidator;
 import fr.oc.nico.clambering.model.Utilisateur;
 import fr.oc.nico.clambering.service.SecurityService;
 import fr.oc.nico.clambering.service.UtilisateurService;

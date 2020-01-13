@@ -1,4 +1,4 @@
-package fr.oc.nico.clambering.Validator;
+package fr.oc.nico.clambering.configuration;
 
 import fr.oc.nico.clambering.model.Utilisateur;
 import fr.oc.nico.clambering.service.UtilisateurService;

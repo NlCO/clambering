@@ -20,6 +20,7 @@
 	</properties>
 
 	<dependencies>
+		<!-- Beginning generated Spring Boot framework dependencies see https://github.com/spring-io/initializr/ -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -78,8 +79,9 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<!-- end generated Spring Boot framework dependencies see https://github.com/spring-io/initializr/ -->
 
-
+		<!-- Beginning of cucumber dependencies for BDD (test) see https://cucumber.io/ -->
 		<dependency>
 			<groupId>io.cucumber</groupId>
 			<artifactId>cucumber-jvm</artifactId>
@@ -99,7 +101,9 @@
 			<version>4.2.6</version>
 			<scope>test</scope>
 		</dependency>
+		<!-- End of Cucumber dependencies for BDD (test) see https://cucumber.io/ -->
 
+		<!-- Beginning of Bootstrap dependencies for CSS (Responsive web site) see https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
 		<dependency>
 			<groupId>org.webjars</groupId>
 			<artifactId>bootstrap</artifactId>
@@ -110,7 +114,15 @@
 			<artifactId>jquery</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+		<!-- End of Bootstrap dependencies for CSS (Responsive web site) see https://getbootstrap.com/docs/4.0/getting-started/introduction/ -->
 
+		<!-- Adding layout webpage management via Thymeleaf -->
+		<dependency>
+			<groupId>nz.net.ultraq.thymeleaf</groupId>
+			<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
+
+		<!-- Leaflet dependency for interactive MAP see https://leafletjs.com/ -->
 		<!-- https://mvnrepository.com/artifact/org.webjars/leaflet -->
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -118,19 +130,7 @@
 			<version>1.5.1</version>
 		</dependency>
 
-
-		<dependency>
-			<groupId>nz.net.ultraq.thymeleaf</groupId>
-			<artifactId>thymeleaf-layout-dialect</artifactId>
-		</dependency>
-
-
-		<dependency>
-			<groupId>org.webjars</groupId>
-			<artifactId>flag-icon-css</artifactId>
-			<version>2.4.0</version>
-		</dependency>
-
+		<!-- Icon set toolkit see https://fontawesome.com/ -->
 		<!-- https://mvnrepository.com/artifact/org.webjars/font-awesome -->
 		<dependency>
 			<groupId>org.webjars</groupId>
@@ -138,11 +138,17 @@
 			<version>5.10.1</version>
 		</dependency>
 
-
+		<!-- Country Flag Icon set toolkit see https://github.com/webjars/flag-icon-css -->
+		<dependency>
+			<groupId>org.webjars</groupId>
+			<artifactId>flag-icon-css</artifactId>
+			<version>2.4.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
 		<plugins>
+			<!-- Beginning generated Spring Boot framework plugins see https://github.com/spring-io/initializr/ -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
@@ -156,8 +162,7 @@
 					<reuseForks>true</reuseForks>
 				</configuration>
 			</plugin>
+			<!-- end generated Spring Boot framework plugin see https://github.com/spring-io/initializr/ -->
 		</plugins>
-
 	</build>
-
 </project>
